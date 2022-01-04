@@ -125,6 +125,7 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 	}
 
 	if !server.diFactory.newDisplayConfig().Exists(nodeId) {
+		server.logger.Errorf("Render request for unknown node %s received.", nodeId)
 		errorRenderer := server.diFactory.newErrorRenderer(nodeId, errors.New("Invalid NodeId: "+nodeId))
 		errContent, _ := errorRenderer.Content()
 		http.Error(w, errContent, http.StatusBadRequest)
