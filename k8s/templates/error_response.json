@@ -1,0 +1,95 @@
+{
+    "code": 500,
+    "data": [
+        {
+            "renderId": "{{ .RenderId }}",
+            "nodeId": "{{ .NodeId }}",
+            "isRendered": false,
+            "content": {
+                "background": {
+                    "bgColor": "WHITE"
+                },
+                "items": [
+                    {
+                        "type": "RECTANGLE",
+                        "data": {
+                            "fillColor": "WHITE",
+                            "strokeThickness": 1,
+                            "block": { 
+                                "x": 50, 
+                                "y": 50, 
+                                "w": 780, 
+                                "h": 420 
+                            }
+                        }
+                    },
+                    {
+                        "type": "LINE",
+                        "data": {
+                            "backgroundColor": "WHITE",
+                            "lineColor": "BLACK",
+                            "linePattern": "SOLID",
+                            "block": {
+                                "x0": 51,
+                                "y0": 101,
+                                "x1": 829,
+                                "y1": 101
+                          }
+                        }
+                    },
+                    {
+                        "type": "TEXT",
+                        "data": {
+                            "text": "An error has occurred!",
+                            "id": "hdb.error.title",
+                            "textColor": "WHITE",
+                            "backgroundColor": "RED",
+                            "font": "KAUSHAN_SCRIPT_32",
+                            "textAlign": "CENTER",
+                            "block": {
+                                "x": 51,
+                                "y": 51,
+                                "w": 778,
+                                "h": 50
+                            }
+                        }
+                    },
+                    {
+                        "type": "TEXT",
+                        "data": {
+                            "text": "{{ .Message }}",
+                            "id": "hdb.error.message",
+                            "textColor": "BLACK",
+                            "backgroundColor": "WHITE",
+                            "font": "KAUSHAN_SCRIPT_20",
+                            "textAlign": "LEFT",
+                            "block": {
+                                "x": 51,
+                                "y": 102,
+                                "w": 778,
+                                "h": 100
+                            }
+                        }
+                    },
+                    {
+                        "type": "TEXT",
+                        "data": {
+                            "text": "{{ .TimeStamp }}",
+                            "id": "hdb.error.timestamp",
+                            "textColor": "BLACK",
+                            "backgroundColor": "WHITE",
+                            "font": "KAUSHAN_SCRIPT_20",
+                            "textAlign": "LEFT",
+                            "block": {
+                                "x": 51,
+                                "y": 446,
+                                "w": 778,
+                                "h": 24
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

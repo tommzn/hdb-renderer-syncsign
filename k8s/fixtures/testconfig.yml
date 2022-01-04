@@ -1,0 +1,35 @@
+
+hdb:
+  server:
+    port: "8081"
+    minify: false
+  template_dir: "templates"
+  displays:
+    - id: Display01
+    - id: Display02
+    - id: Display03
+  error_response:
+    template: "error_response.json"
+  response:
+    template: "response.json"
+  indoorclimate:
+    template: "indoorclimate.json"
+    anchor: 
+      x: 100
+      y: 100
+    size:
+      height: 200
+      width: 200
+    border: 5
+    rooms:
+      - id: "1"
+        name: "Room1"
+        displayIndex: "1"
+      - id: "2"
+        name: "Room2"
+        displayIndex: "2"
+    devices:
+      - id: "Device01"
+        roomId: "1"
+      - id: "Device02"
+        roomId: "2"
