@@ -14,7 +14,7 @@ func bootstrap(conf config.Config, ctx context.Context) (*core.Minion, error) {
 	if conf == nil {
 		conf = loadConfig()
 	}
-	logger := newLogger(conf, newSecretsManager())
+	logger := newLogger(conf, newSecretsManager(), ctx)
 	server := newServer(conf, logger, newFactory(conf, logger))
 	return core.NewMinion(server), nil
 }
@@ -44,6 +44,10 @@ func newSecretsManager() secrets.SecretsManager {
 }
 
 // newLogger creates a new logger from  passed config.
-func newLogger(conf config.Config, secretsMenager secrets.SecretsManager) log.Logger {
-	return log.NewLoggerFromConfig(conf, secretsMenager)
+func newLogger(conf config.Config, secretsMenager secrets.SecretsManager, ctx context.Context) log.Logger {
+	logger := log.NewLoggerFromConfig(conf, secretsMenager)
+	logContextValues := make(map[string]string)
+	logContextValues[log.LogCtxNamespace] = "hdb-renderer-syncsign"
+	logger.WithContext(log.LogContextWithValues(ctx, logContextValues))
+	return logger
 }
