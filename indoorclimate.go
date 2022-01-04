@@ -47,6 +47,11 @@ func (renderer *indoorClimateRenderer) Content() (string, error) {
 
 	defer renderer.logger.Flush()
 
+	if len(renderer.roomCfg.rooms) == 0 {
+		renderer.logger.Error("No room config for rendering!")
+		return "", nil
+	}
+
 	// Init indoor climate data from used datasource if nothing is available
 	// or if renderer doesn't observer datasource actively.
 	if len(renderer.roomClimate) == 0 || renderer.dataSourceChan == nil {
@@ -54,7 +59,7 @@ func (renderer *indoorClimateRenderer) Content() (string, error) {
 	}
 
 	if len(renderer.roomClimate) == 0 {
-		renderer.logger.Info("No room climate to render.")
+		renderer.logger.Error("No room climate to render.")
 		return "", nil
 	}
 
