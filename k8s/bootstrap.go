@@ -40,7 +40,9 @@ func loadConfig() config.Config {
 
 // newSecretsManager retruns a new secrets manager from passed config.
 func newSecretsManager() secrets.SecretsManager {
-	return secrets.NewSecretsManager()
+	secretsManager := secrets.NewDockerecretsManager("/run/secrets/token")
+	secrets.ExportToEnvironment([]string{"AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"}, secretsManager)
+	return secretsManager
 }
 
 // newLogger creates a new logger from  passed config.
