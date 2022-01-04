@@ -35,7 +35,7 @@ func (suite *ServerTestSuite) TestHealthRequest() {
 	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
 	suite.startServer(server)
 
-	resp, err := http.Get("http://localhost:8081/health")
+	resp, err := http.Get("http://localhost:8080/health")
 	suite.Nil(err)
 	suite.NotNil(resp)
 	suite.Equal(http.StatusNoContent, resp.StatusCode)
@@ -48,12 +48,12 @@ func (suite *ServerTestSuite) TestRenderRequest() {
 	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
 	suite.startServer(server)
 
-	resp1, err1 := http.Get("http://localhost:8081/renders/xYx-123-yYy")
+	resp1, err1 := http.Get("http://localhost:8080/renders/xYx-123-yYy")
 	suite.Nil(err1)
 	suite.NotNil(resp1)
 	suite.Equal(http.StatusOK, resp1.StatusCode)
 
-	resp2, err2 := http.Get("http://localhost:8081/renders/")
+	resp2, err2 := http.Get("http://localhost:8080/renders/")
 	suite.Nil(err2)
 	suite.NotNil(resp2)
 	suite.Equal(http.StatusNotFound, resp2.StatusCode)
@@ -66,13 +66,13 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
 	suite.startServer(server)
 
-	resp1, err1 := http.Get("http://localhost:8081/renders/nodes/InvalidNodeId")
+	resp1, err1 := http.Get("http://localhost:8080/renders/nodes/InvalidNodeId")
 	suite.Nil(err1)
 	suite.NotNil(resp1)
 	suite.Equal(http.StatusBadRequest, resp1.StatusCode)
 
 	nodeId := "Display01"
-	resp2, err2 := http.Get("http://localhost:8081/renders/nodes/" + nodeId)
+	resp2, err2 := http.Get("http://localhost:8080/renders/nodes/" + nodeId)
 	suite.Nil(err2)
 	suite.NotNil(resp2)
 	resBody2 := suite.readBody(resp2)
