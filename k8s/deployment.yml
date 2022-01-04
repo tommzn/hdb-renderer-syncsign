@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hdb
+  labels:
+    name: hdb
+
+---
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: hdb-renderer-syncsign
+  namespace: hdb
+  labels:
+    app: hdb-renderer-syncsign
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hdb-renderer-syncsign
+  template:
+    metadata:
+      labels:
+        app: hdb-renderer-syncsign
+    spec:
+      containers:
+        - name: hdb-renderer-syncsign
+          image: ghcr.io/tommzn/hdb-renderer-syncsign/arm64:latest
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /run/secrets/token
+              readOnly: true
+          imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: hdb-datasource-indoorclimate
+spec:
+  selector:
+    app: hdb-datasource-indoorclimate
+  ports:
+    - port: 8080
