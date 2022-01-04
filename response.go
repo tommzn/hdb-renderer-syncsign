@@ -2,6 +2,7 @@ package syncsign
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	utils "github.com/tommzn/go-utils"
@@ -39,6 +40,9 @@ func (renderer *ResponseRenderer) Content() (string, error) {
 	items, err := renderer.contentFromItemRenderer()
 	if err != nil {
 		return "", err
+	}
+	if items == nil || *items == "" {
+		return "", errors.New("No items has been rendered!")
 	}
 	data.Items = *items
 	return renderer.template.RenderWith(data)

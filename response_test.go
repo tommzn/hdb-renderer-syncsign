@@ -47,12 +47,8 @@ func (suite *ResponseTestSuite) TestGenerateContentWithoutItemRenderer() {
 	renderer := NewResponseRenderer(tmpl, "Node-1", []core.Renderer{})
 
 	content, err := renderer.Content()
-	suite.Nil(err)
-
-	// Replace renderer id and timestamp with default value for assertion
-	content = replaceUUID(content, "RenderId-1")
-	content = replaceTimeStamp(content, "TimeStamp-1")
-	assertTemplateHash(suite.Assert(), content, "aceb929b82257ec2470ea341b161bdee8cfe9dd3")
+	suite.NotNil(err)
+	suite.Equal("", content)
 }
 
 func (suite *ResponseTestSuite) TestGenerateContentWithFailingItemRenderer() {
