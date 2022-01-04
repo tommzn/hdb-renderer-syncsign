@@ -1,0 +1,32 @@
+
+hdb:
+  template_dir: "templates"
+  displays:
+    - id: xxx
+  indoorclimate:
+    template: "indoorclimate.json"
+    anchor: 
+      x: 200
+      y: 200
+    size:
+      height: 200
+      width: 200
+    border: 5
+    rooms:
+      - id: "1"
+        name: "Living Room"
+        displayIndex: "0"
+      - id: "2"
+        name: "Bathroom"
+        displayIndex: "2"
+      - id: "3"
+        name: "Kitchen"
+        displayIndex: "1"
+      - id: "4"
+    devices:
+      - id: "d82d0352-ded7-4634-85ff-dfb2bb68dffb"
+        roomId: "1"
+      - id: "a8572541-bf37-4e76-a89b-e6665c8102e0"
+        roomId: "2"
+      - id: "e25daaa7-ebd1-442b-89ed-d96272d976cd"
+        roomId: "3"

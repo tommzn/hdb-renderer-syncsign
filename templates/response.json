@@ -1,0 +1,18 @@
+{
+    "code": 200,
+    "data": [
+        {
+            "renderId": "{{ .RenderId }}",
+            "nodeId": "{{ .NodeId }}",
+            "isRendered": false,
+            "content": {
+                "background": {
+                    "bgColor": "WHITE"
+                },
+                "items": [
+                    {{ .Items }}
+                ]
+            }
+        }
+    ]
+}

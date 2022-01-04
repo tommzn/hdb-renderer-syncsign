@@ -1,0 +1,8 @@
+
+hdb:
+  displays:
+    - id: xxx
+  indoorclimate:
+    anchor: 
+      "x": 100
+    

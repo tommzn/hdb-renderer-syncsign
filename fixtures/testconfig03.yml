@@ -1,0 +1,5 @@
+
+hdb:
+  displays:
+    - id: "Display1"
+    - id: "Display3"

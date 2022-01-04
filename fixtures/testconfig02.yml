@@ -1,0 +1,22 @@
+
+hdb:
+  indoorclimate:
+    anchor: 
+      x: 10
+      y: 10
+    size:
+      height: 200
+      width: 200
+    border: 5
+    rooms:
+      - id: "1"
+        name: "Room1"
+        displayIndex: "0"
+      - id: "2"
+        name: "Room2"
+        displayIndex: "1"
+    devices:
+      - id: "Device2"
+        roomId: "1"
+      - id: "Device1"
+        roomId: "2"
