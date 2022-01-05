@@ -1,5 +1,5 @@
 {
-    "code": 500,
+    "code": 200,
     "data": [
         {
             "renderId": "{{ .RenderId }}",
@@ -24,27 +24,13 @@
                         }
                     },
                     {
-                        "type": "LINE",
-                        "data": {
-                            "backgroundColor": "WHITE",
-                            "lineColor": "BLACK",
-                            "linePattern": "SOLID",
-                            "block": {
-                                "x0": 51,
-                                "y0": 101,
-                                "x1": 829,
-                                "y1": 101
-                          }
-                        }
-                    },
-                    {
                         "type": "TEXT",
                         "data": {
                             "text": "An error has occurred!",
                             "id": "hdb.error.title",
                             "textColor": "WHITE",
                             "backgroundColor": "RED",
-                            "font": "KAUSHAN_SCRIPT_32",
+                            "font": "DDIN_32",
                             "textAlign": "CENTER",
                             "block": {
                                 "x": 51,
@@ -61,14 +47,18 @@
                             "id": "hdb.error.message",
                             "textColor": "BLACK",
                             "backgroundColor": "WHITE",
-                            "font": "KAUSHAN_SCRIPT_20",
+                            "font": "DDIN_24",
                             "textAlign": "LEFT",
                             "block": {
                                 "x": 51,
                                 "y": 102,
                                 "w": 778,
                                 "h": 100
-                            }
+                            },
+			    "offset": {
+				"x": 5,
+				"y": 5
+			    }
                         }
                     },
                     {
@@ -78,12 +68,12 @@
                             "id": "hdb.error.timestamp",
                             "textColor": "BLACK",
                             "backgroundColor": "WHITE",
-                            "font": "KAUSHAN_SCRIPT_20",
+                            "font": "DDIN_16",
                             "textAlign": "LEFT",
                             "block": {
-                                "x": 51,
-                                "y": 446,
-                                "w": 778,
+                                "x": 10,
+                                "y": 500,
+                                "w": 860,
                                 "h": 24
                             }
                         }
