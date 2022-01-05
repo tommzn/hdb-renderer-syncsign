@@ -125,7 +125,7 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 	}
 
 	if !server.diFactory.newDisplayConfig().Exists(nodeId) {
-		server.writeResponseError(w, nodeId, fmt.Errorf("Render request for unknown node %s received. abcdefghijklmnopqrstuvwxyz1234567890", nodeId))
+		server.writeResponseError(w, nodeId, fmt.Errorf("Render request for unknown node %s received.", nodeId))
 		return
 	}
 
