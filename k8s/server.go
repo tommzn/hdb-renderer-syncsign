@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"sync"
 	"time"
@@ -119,33 +120,42 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 	vars := mux.Vars(r)
 	nodeId, ok := vars["nodeid"]
 	if !ok {
-		msg := "Node id missing."
-		server.logger.Error(msg)
-		http.Error(w, msg, http.StatusBadRequest)
+		server.writeResponseError(w, "<nil>", errors.New("Node id missing."))
+		return
 	}
 
 	if !server.diFactory.newDisplayConfig().Exists(nodeId) {
-		server.logger.Errorf("Render request for unknown node %s received.", nodeId)
-		errorRenderer := server.diFactory.newErrorRenderer(nodeId, errors.New("Invalid NodeId: "+nodeId))
-		errContent, _ := errorRenderer.Content()
-		http.Error(w, errContent, http.StatusBadRequest)
+		server.writeResponseError(w, nodeId, fmt.Errorf("Render request for unknown node %s received.", nodeId))
 		return
 	}
 
 	responseRenderer := server.diFactory.newResponseRenderer(nodeId)
 	content, err := responseRenderer.Content()
 	if err != nil {
-		errorRenderer := server.diFactory.newErrorRenderer(nodeId, err)
-		errContent, _ := errorRenderer.Content()
-		http.Error(w, errContent, http.StatusInternalServerError)
+		server.writeResponseError(w, nodeId, err)
 		return
 	}
+	server.writeResponse(w, content, nil)
+}
 
+// WriteResponse writes given content to response writer. If statusCode is not nil it's set as header.
+func (server *webServer) writeResponse(w http.ResponseWriter, content string, statusCode *int) {
+
+	if statusCode != nil {
+		w.WriteHeader(*statusCode)
+	}
 	buf := &bytes.Buffer{}
 	json.Compact(buf, []byte(content))
 	minifiedContent := buf.Bytes()
-	server.logger.Debug(string(minifiedContent))
 	w.Write(minifiedContent)
+}
+
+// WriteResponseError will generate a error response and write it to given response writer.
+func (server *webServer) writeResponseError(w http.ResponseWriter, nodeId string, err error) {
+	server.logger.Error(err)
+	errorRenderer := server.diFactory.newErrorRenderer(nodeId, err)
+	errContent, _ := errorRenderer.Content()
+	server.writeResponse(w, errContent, nil)
 }
 
 // StartDataSourceObserving calls ObserveDataSource for each item renderer.

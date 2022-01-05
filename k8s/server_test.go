@@ -69,7 +69,7 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	resp1, err1 := http.Get("http://localhost:8080/renders/nodes/InvalidNodeId")
 	suite.Nil(err1)
 	suite.NotNil(resp1)
-	suite.Equal(http.StatusBadRequest, resp1.StatusCode)
+	suite.Equal(http.StatusOK, resp1.StatusCode)
 
 	nodeId := "Display01"
 	resp2, err2 := http.Get("http://localhost:8080/renders/nodes/" + nodeId)
