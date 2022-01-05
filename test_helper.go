@@ -33,17 +33,17 @@ func loggerForTest() log.Logger {
 	return log.NewLogger(log.Debug, nil, nil)
 }
 
-func indoorClimateRendererForTest(configFile string) core.Renderer {
+func indoorClimateRendererForTest(configFile string) *IndoorClimateRenderer {
 	datasource := newDataSourceMock(false, false, indoorClimateDataForTest())
 	return NewIndoorClimateRenderer(loadConfigForTest(config.AsStringPtr(configFile)), loggerForTest(), templateForTest(), datasource)
 }
 
-func indoorClimateRendererWithDataSourceErrorForTest(configFile string) core.Renderer {
+func indoorClimateRendererWithDataSourceErrorForTest(configFile string) *IndoorClimateRenderer {
 	datasource := newDataSourceMock(true, true, indoorClimateDataForTest())
 	return NewIndoorClimateRenderer(loadConfigForTest(config.AsStringPtr(configFile)), loggerForTest(), templateForTest(), datasource)
 }
 
-func indoorClimateRendererWithTemplateErrorForTest(configFile string) core.Renderer {
+func indoorClimateRendererWithTemplateErrorForTest(configFile string) *IndoorClimateRenderer {
 	datasource := newDataSourceMock(false, false, indoorClimateDataForTest())
 	return NewIndoorClimateRenderer(loadConfigForTest(config.AsStringPtr(configFile)), loggerForTest(), failingTemplateForTest(), datasource)
 }

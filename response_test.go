@@ -1,7 +1,6 @@
 package syncsign
 
 import (
-	"context"
 	"github.com/stretchr/testify/suite"
 	core "github.com/tommzn/hdb-renderer-core"
 	"testing"
@@ -33,12 +32,6 @@ func (suite *ResponseTestSuite) TestGenerateContent() {
 	content = replaceUUID(content, "RenderId-1")
 	content = replaceTimeStamp(content, "TimeStamp-1")
 	assertTemplateHash(suite.Assert(), content, "03729f689b446819bb1ef11ca42517e87bcf5cf3")
-
-	size := renderer.Size()
-	suite.Equal(528, size.Height)
-	suite.Equal(880, size.Width)
-
-	renderer.ObserveDataSource(context.Background())
 }
 
 func (suite *ResponseTestSuite) TestGenerateContentWithoutItemRenderer() {

@@ -1,9 +1,7 @@
 package syncsign
 
 import (
-	"context"
 	"errors"
-	"strings"
 
 	utils "github.com/tommzn/go-utils"
 	core "github.com/tommzn/hdb-renderer-core"
@@ -16,14 +14,6 @@ func NewResponseRenderer(template core.Template, nodeId string, itemRenderer []c
 		template:     template,
 		nodeId:       nodeId,
 		itemRenderer: itemRenderer,
-	}
-}
-
-// Size is equal to size of 7.5 inch screen.
-func (renderer *ResponseRenderer) Size() core.Size {
-	return core.Size{
-		Height: 528,
-		Width:  880,
 	}
 }
 
@@ -48,11 +38,6 @@ func (renderer *ResponseRenderer) Content() (string, error) {
 	return renderer.template.RenderWith(data)
 }
 
-// ObserveDataSource has no effect for response renderer, because there's no datasource.
-func (renderer *ResponseRenderer) ObserveDataSource(ctx context.Context) {
-
-}
-
 // ContentFromItemRenderer loops above all existing item renderers and returns a list of all generated items.
 func (renderer *ResponseRenderer) contentFromItemRenderer() (*string, error) {
 
@@ -64,15 +49,4 @@ func (renderer *ResponseRenderer) contentFromItemRenderer() (*string, error) {
 		content = appendItems(content, items)
 	}
 	return &content, errorStack.AsError()
-}
-
-// AppendItems appends passed items to given content, separated by default JSON element separattor: ",".
-// Leasing separators in content, or trailing separators in items will be removed.
-func appendItems(content, items string) string {
-	if items != "" {
-		items = strings.TrimPrefix(items, ",")
-		items = strings.TrimSuffix(items, ",")
-		content = content + "," + items
-	}
-	return strings.TrimPrefix(strings.TrimSuffix(content, ","), ",")
 }

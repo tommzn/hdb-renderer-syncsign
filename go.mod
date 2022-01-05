@@ -10,6 +10,6 @@ require (
 	github.com/tommzn/go-utils v1.0.2
 	github.com/tommzn/hdb-core v1.0.1
 	github.com/tommzn/hdb-events-go v1.0.8
-	github.com/tommzn/hdb-renderer-core v1.1.3
+	github.com/tommzn/hdb-renderer-core v1.1.4
 	google.golang.org/protobuf v1.27.1
 )

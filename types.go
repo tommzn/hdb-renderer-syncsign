@@ -6,7 +6,7 @@ import (
 	core "github.com/tommzn/hdb-renderer-core"
 )
 
-type indoorClimateRenderer struct {
+type IndoorClimateRenderer struct {
 	originAnchor   core.Point
 	size           core.Size
 	spacing        core.Spacing
@@ -41,6 +41,10 @@ type DisplayConfig struct {
 	displays map[string]struct{}
 }
 
+type TimestampRenderer struct {
+	template core.Template
+}
+
 type textColor string
 
 const (
@@ -73,13 +77,5 @@ type responseData struct {
 
 type ErrorRenderer struct {
 	template core.Template
-	nodeId   string
 	err      error
-}
-
-type errorData struct {
-	RenderId  string
-	NodeId    string
-	Message   string
-	TimeStamp string
 }

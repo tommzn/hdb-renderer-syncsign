@@ -3,6 +3,7 @@ package syncsign
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	config "github.com/tommzn/go-config"
 	core "github.com/tommzn/hdb-renderer-core"
@@ -129,4 +130,15 @@ func batteryIconColor(batteryValue string) textColor {
 		return COLOR_RED
 	}
 	return COLOR_BLACK
+}
+
+// AppendItems appends passed items to given content, separated by default JSON element separattor: ",".
+// Leasing separators in content, or trailing separators in items will be removed.
+func appendItems(content, items string) string {
+	if items != "" {
+		items = strings.TrimPrefix(items, ",")
+		items = strings.TrimSuffix(items, ",")
+		content = content + "," + items
+	}
+	return strings.TrimPrefix(strings.TrimSuffix(content, ","), ",")
 }
