@@ -25,19 +25,15 @@ func (suite *IndoorClimateTestSuite) TestGenerateContent() {
 	content, err := renderer.Content()
 	suite.Nil(err)
 	assertTemplateHash(suite.Assert(), content, "72ed7031fc3eb4e707cd78bdeda6e0acb2039ce6")
-
-	size := renderer.Size()
-	suite.Equal(200, size.Height)
-	suite.Equal(400, size.Width)
 }
 
 func (suite *IndoorClimateTestSuite) TestGenerateContentWithError() {
 
 	renderer := indoorClimateRendererWithDataSourceErrorForTest("fixtures/testconfig02.yml")
 
-	suite.Len(renderer.(*indoorClimateRenderer).roomClimate, 0)
-	renderer.(*indoorClimateRenderer).initIndoorClimateData()
-	suite.Len(renderer.(*indoorClimateRenderer).roomClimate, 0)
+	suite.Len(renderer.roomClimate, 0)
+	renderer.initIndoorClimateData()
+	suite.Len(renderer.roomClimate, 0)
 
 	content, err := renderer.Content()
 	suite.Nil(err)
@@ -69,7 +65,7 @@ func (suite *IndoorClimateTestSuite) TestDataSourceObserving() {
 		Type:      events.MeasurementType_TEMPERATURE,
 		Value:     newTemperature,
 	}
-	renderer.(*indoorClimateRenderer).datasource.(*datasourceMock).writeToMessageChannel(message)
+	renderer.datasource.(*datasourceMock).writeToMessageChannel(message)
 
 	time.Sleep(1 * time.Second)
 	content2, err2 := renderer.Content()
@@ -113,7 +109,7 @@ func (suite *IndoorClimateTestSuite) TestStopDataSourceObservingOnClosedChannel(
 	}()
 	time.Sleep(100 * time.Millisecond)
 
-	close(renderer.(*indoorClimateRenderer).datasource.(*datasourceMock).eventChan)
+	close(renderer.datasource.(*datasourceMock).eventChan)
 	select {
 	case ok := <-endChan:
 		suite.True(ok)

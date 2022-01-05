@@ -13,13 +13,13 @@ import (
 )
 
 // NewIndoorClimateRenderer returns a new renderer for infoor climate data. Room will be taken from passed config, template and datasource have to be passed.
-func NewIndoorClimateRenderer(conf config.Config, logger log.Logger, template core.Template, datasource core.DataSource) core.Renderer {
+func NewIndoorClimateRenderer(conf config.Config, logger log.Logger, template core.Template, datasource core.DataSource) *IndoorClimateRenderer {
 
 	anchor := anchorFromConfig(conf, "hdb.indoorclimate.anchor")
 	size := sizeFromConfig(conf, "hdb.indoorclimate.size")
 	spacing := spacingFromConfig(conf, "hdb.indoorclimate.spacing")
 	roomCfg := configForRooms(conf, "hdb.indoorclimate")
-	return &indoorClimateRenderer{
+	return &IndoorClimateRenderer{
 		originAnchor: anchor,
 		size:         size,
 		spacing:      spacing,
@@ -31,19 +31,9 @@ func NewIndoorClimateRenderer(conf config.Config, logger log.Logger, template co
 	}
 }
 
-// Size returns the entire space indoor climate elements uses. This size differs in width depending on
-// number of displayed roomes.
-func (renderer *indoorClimateRenderer) Size() core.Size {
-	numberOfRooms := len(renderer.roomClimate)
-	return core.Size{
-		Height: renderer.size.Height + renderer.spacing.Top + renderer.spacing.Bottom,
-		Width:  (renderer.size.Width + renderer.spacing.Left + renderer.spacing.Right) * numberOfRooms,
-	}
-}
-
 // Content fetches current inddor climate data and generated room climate elements based
 // pn given room/device config.
-func (renderer *indoorClimateRenderer) Content() (string, error) {
+func (renderer *IndoorClimateRenderer) Content() (string, error) {
 
 	defer renderer.logger.Flush()
 
@@ -79,7 +69,7 @@ func (renderer *indoorClimateRenderer) Content() (string, error) {
 }
 
 // ObserveDataSource will listen for new indoor climate data provided by used datasource.
-func (renderer *indoorClimateRenderer) ObserveDataSource(ctx context.Context) {
+func (renderer *IndoorClimateRenderer) ObserveDataSource(ctx context.Context) {
 
 	defer renderer.logger.Flush()
 
@@ -101,7 +91,7 @@ func (renderer *indoorClimateRenderer) ObserveDataSource(ctx context.Context) {
 }
 
 // InitIndoorClimateData will dop existing indoor climate data and fetch all available events from used datasource.
-func (renderer *indoorClimateRenderer) initIndoorClimateData() {
+func (renderer *IndoorClimateRenderer) initIndoorClimateData() {
 
 	renderer.roomClimate = make(map[string]indoorCliemate)
 
@@ -118,7 +108,7 @@ func (renderer *indoorClimateRenderer) initIndoorClimateData() {
 }
 
 // addAsIndoorClimateData will try to add passed message to local indoor climate data.
-func (renderer *indoorClimateRenderer) addAsIndoorClimateData(message proto.Message) {
+func (renderer *IndoorClimateRenderer) addAsIndoorClimateData(message proto.Message) {
 
 	if indoorClimate, ok := message.(*events.IndoorClimate); ok {
 		if roomId, ok := renderer.roomCfg.deviceMap[indoorClimate.DeviceId]; ok {
@@ -140,7 +130,7 @@ func (renderer *indoorClimateRenderer) addAsIndoorClimateData(message proto.Mess
 // getRoomClimate will have a look if there's already climate data for given room.
 // If nothing exists a new room climate with default values will created, assigned to passed
 // room and returned.
-func (renderer *indoorClimateRenderer) getRoomClimate(roomId string) indoorCliemate {
+func (renderer *IndoorClimateRenderer) getRoomClimate(roomId string) indoorCliemate {
 
 	if roomClimate, ok := renderer.roomClimate[roomId]; ok {
 		return roomClimate
@@ -163,7 +153,7 @@ func (renderer *indoorClimateRenderer) getRoomClimate(roomId string) indoorCliem
 }
 
 // sortedRoomClimateData sorts current room climate based on displayIndex given by room config.
-func (renderer *indoorClimateRenderer) sortedRoomClimateData() []indoorCliemate {
+func (renderer *IndoorClimateRenderer) sortedRoomClimateData() []indoorCliemate {
 
 	roomClimate := []indoorCliemate{}
 	for _, cliamte := range renderer.roomClimate {
