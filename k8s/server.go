@@ -143,7 +143,9 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 
 	buf := &bytes.Buffer{}
 	json.Compact(buf, []byte(content))
-	w.Write(buf.Bytes())
+	minifiedContent := buf.Bytes()
+	server.logger.Debug(string(minifiedContent))
+	w.Write(minifiedContent)
 }
 
 // StartDataSourceObserving calls ObserveDataSource for each item renderer.
