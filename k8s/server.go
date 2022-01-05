@@ -46,8 +46,6 @@ func (server *webServer) Run(ctx context.Context, waitGroup *sync.WaitGroup) err
 	server.logger.Infof("Listen [%s]", server.port)
 	server.httpServer = &http.Server{Addr: ":" + server.port, Handler: router}
 
-	server.startDataSourceObserving(ctx)
-
 	endChan := make(chan error, 1)
 	go func() {
 		endChan <- server.httpServer.ListenAndServe()
@@ -135,15 +133,11 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 		server.writeResponseError(w, nodeId, err)
 		return
 	}
-	server.writeResponse(w, content, nil)
+	server.writeResponse(w, content)
 }
 
 // WriteResponse writes given content to response writer. If statusCode is not nil it's set as header.
-func (server *webServer) writeResponse(w http.ResponseWriter, content string, statusCode *int) {
-
-	if statusCode != nil {
-		w.WriteHeader(*statusCode)
-	}
+func (server *webServer) writeResponse(w http.ResponseWriter, content string) {
 	buf := &bytes.Buffer{}
 	json.Compact(buf, []byte(content))
 	minifiedContent := buf.Bytes()
@@ -153,14 +147,7 @@ func (server *webServer) writeResponse(w http.ResponseWriter, content string, st
 // WriteResponseError will generate a error response and write it to given response writer.
 func (server *webServer) writeResponseError(w http.ResponseWriter, nodeId string, err error) {
 	server.logger.Error(err)
-	errorRenderer := server.diFactory.newErrorRenderer(nodeId, err)
+	errorRenderer := server.diFactory.newErrorResponseRenderer(nodeId, err)
 	errContent, _ := errorRenderer.Content()
-	server.writeResponse(w, errContent, nil)
-}
-
-// StartDataSourceObserving calls ObserveDataSource for each item renderer.
-func (server *webServer) startDataSourceObserving(ctx context.Context) {
-	for _, itemRenderer := range server.diFactory.itemRenderer() {
-		go itemRenderer.ObserveDataSource(ctx)
-	}
+	server.writeResponse(w, errContent)
 }

@@ -15,7 +15,7 @@ func bootstrap(conf config.Config, ctx context.Context) (*core.Minion, error) {
 		conf = loadConfig()
 	}
 	logger := newLogger(conf, newSecretsManager(), ctx)
-	server := newServer(conf, logger, newFactory(conf, logger))
+	server := newServer(conf, logger, newFactory(conf, logger, ctx))
 	return core.NewMinion(server), nil
 }
 

@@ -8,8 +8,10 @@ hdb:
     - id: Display01
     - id: Display02
     - id: Display03
-  error_response:
-    template: "error_response.json"
+  error:
+    template: "error.json"
+  timestamp:
+    template: "timestamp.json"
   response:
     template: "response.json"
   indoorclimate:

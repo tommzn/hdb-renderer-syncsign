@@ -30,9 +30,14 @@ func (suite *ServerTestSuite) SetupSuite() {
 	suite.conf = loadConfigForTest(nil)
 	suite.logger = loggerForTest()
 }
+
+func (suite *ServerTestSuite) SetupTest() {
+	suite.ctx, suite.cancelFunc = context.WithCancel(context.Background())
+}
+
 func (suite *ServerTestSuite) TestHealthRequest() {
 
-	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
+	server := suite.serverForTest()
 	suite.startServer(server)
 
 	resp, err := http.Get("http://localhost:8080/health")
@@ -45,7 +50,7 @@ func (suite *ServerTestSuite) TestHealthRequest() {
 
 func (suite *ServerTestSuite) TestRenderRequest() {
 
-	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
+	server := suite.serverForTest()
 	suite.startServer(server)
 
 	resp1, err1 := http.Get("http://localhost:8080/renders/xYx-123-yYy")
@@ -63,7 +68,7 @@ func (suite *ServerTestSuite) TestRenderRequest() {
 
 func (suite *ServerTestSuite) TestNodeRequest() {
 
-	server := newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger))
+	server := suite.serverForTest()
 	suite.startServer(server)
 
 	resp1, err1 := http.Get("http://localhost:8080/renders/nodes/InvalidNodeId")
@@ -82,18 +87,21 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	resData := suite.asTestResponse(resBody2)
 	suite.Len(resData.Data, 1)
 	suite.Equal(nodeId, resData.Data[0].NodeId)
-	suite.Len(resData.Data[0].Content.Items, 8)
+	suite.Len(resData.Data[0].Content.Items, 9)
 	suite.stopServer()
 }
 
 func (suite *ServerTestSuite) startServer(server *webServer) {
 	suite.wg = &sync.WaitGroup{}
-	suite.ctx, suite.cancelFunc = context.WithCancel(context.Background())
 	go func() {
 		suite.wg.Add(1)
 		suite.Nil(server.Run(suite.ctx, suite.wg))
 	}()
 	time.Sleep(1 * time.Second)
+}
+
+func (suite *ServerTestSuite) serverForTest() *webServer {
+	return newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger, suite.ctx))
 }
 
 func (suite *ServerTestSuite) stopServer() {

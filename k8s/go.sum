@@ -213,6 +213,8 @@ github.com/tommzn/hdb-events-go v1.0.8 h1:v1j1+a5+J+Wd8QZIfqvquSPiyGX1AMPIA7hwFw
 github.com/tommzn/hdb-events-go v1.0.8/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-renderer-core v1.1.3 h1:8oLDzmmy/Eimp517M2S+dcWVVvZmahBDsGOjpgMHQEc=
 github.com/tommzn/hdb-renderer-core v1.1.3/go.mod h1:AoDVgPymlmwMeOjvCECOnk/0QG7fpYga2ECUJPf+hvA=
+github.com/tommzn/hdb-renderer-core v1.1.4 h1:mDrKELFFWh+qrFpkNQkoKql/rJwfh59Vx5HeiuIBcgo=
+github.com/tommzn/hdb-renderer-core v1.1.4/go.mod h1:AoDVgPymlmwMeOjvCECOnk/0QG7fpYga2ECUJPf+hvA=
 github.com/tommzn/hdb-renderer-syncsign v1.0.0 h1:okNpFFx9Dm/1kRi6lTXtm3trjbViKidrPj5mzvsJE00=
 github.com/tommzn/hdb-renderer-syncsign v1.0.0/go.mod h1:ah7Hu+qc+fi5bfkfBqZNI08ja6XmJq4D7QGARV0fhuc=
 github.com/tommzn/hdb-renderer-syncsign v1.0.1 h1:bTy696dS6I3Z7nWVUaLEJJyD87QsBodxS4y0osnymOc=
@@ -221,6 +223,8 @@ github.com/tommzn/hdb-renderer-syncsign v1.0.2 h1:837zvaRL48nryjkQNqFFt7zDv0pDrk
 github.com/tommzn/hdb-renderer-syncsign v1.0.2/go.mod h1:ah7Hu+qc+fi5bfkfBqZNI08ja6XmJq4D7QGARV0fhuc=
 github.com/tommzn/hdb-renderer-syncsign v1.0.3 h1:wJ4ppd2aw5T1csCm9JyeYA5CN++bodptsRVkyPD6x4w=
 github.com/tommzn/hdb-renderer-syncsign v1.0.3/go.mod h1:ah7Hu+qc+fi5bfkfBqZNI08ja6XmJq4D7QGARV0fhuc=
+github.com/tommzn/hdb-renderer-syncsign v1.1.0 h1:qg0OqDTSs9J+R+Sj9nB0b978GoecxiljEGwGL2C2nhk=
+github.com/tommzn/hdb-renderer-syncsign v1.1.0/go.mod h1:qo4wB3834vEB6sri8QvXk8lkQUOQteRZfrGFj382OsQ=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=

@@ -11,7 +11,7 @@ require (
 	github.com/tommzn/go-secrets v1.0.2
 	github.com/tommzn/hdb-core v1.0.1
 	github.com/tommzn/hdb-events-go v1.0.8
-	github.com/tommzn/hdb-renderer-core v1.1.3
-	github.com/tommzn/hdb-renderer-syncsign v1.0.3
+	github.com/tommzn/hdb-renderer-core v1.1.4
+	github.com/tommzn/hdb-renderer-syncsign v1.1.0
 	google.golang.org/protobuf v1.27.1
 )

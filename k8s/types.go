@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"net/http"
 
 	config "github.com/tommzn/go-config"
@@ -21,9 +22,11 @@ type webServer struct {
 type factory struct {
 	conf                    config.Config
 	logger                  log.Logger
+	ctx                     context.Context
 	errorTemplate           core.Template
 	responseTemplate        core.Template
 	indoorClimateTemplate   core.Template
+	timestampTemplate       core.Template
 	indoorClimateRenderer   core.Renderer
 	indoorClimateDataSource core.DataSource
 	responseRenderer        map[string]core.Renderer
