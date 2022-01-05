@@ -27,7 +27,7 @@ func (suite *ErrorResponseTestSuite) TestGenerateContent() {
 	// Replace renderer id and timestamp with default value for assertion
 	content = replaceUUID(content, "RenderId-1")
 	content = replaceTimeStamp(content, "TimeStamp-1")
-	assertTemplateHash(suite.Assert(), content, "2ffd537c1179e1fc1622c80719712d96a2c81850")
+	assertTemplateHash(suite.Assert(), content, "25e3928425a58ebeec9317c6f239f3592f6918cb")
 
 	size := renderer.Size()
 	suite.Equal(124, size.Height)
