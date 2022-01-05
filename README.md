@@ -11,32 +11,40 @@ Renders listen to a data source and generates content for SyncSign® eInk displa
 # Renderers
 All renderers implement the [Renderer interface](https://github.com/tommzn/hdb-renderer-core/blob/main/interfaces.go) to provide generic way for content generation.
 
-## Response Renderers
-Response renderers generates response payload used in SyncSign template servers, in JSON format.
-
-### Successful Response
-Renderer for a successful response generates JSON content with necessary structure and includes items from depending renderes passed on initialization. Use NewResponseRenderer for initialization.
-#### Config
-Response renderer config contains template file, only.
+## Response Renderer
+Response renderers generates response payload used in SyncSign template servers, in JSON format. It's template used default structure required for SyncSign displays and provides a posibility for other renderers to add items.
+### Config
+Defines path to template file.
 ```yaml
 hdb:
   response:
     template: "response.json"
 ```
 
-### Error Response
-In case something went wrong during content genration, error renderer can be used to generate a suitable server response for an error. Use NewErrorRenderer for initialization.
+## Item Renderers
+Item renderes generates items which will be picked up by response renderer to gnereate a complete response for displays. This can be simple text, geometric shapes or icons.
+
+### Timestamp
+A timestamp renderer generate a single item with current timestamp. By default it's position is in the lower left corner. Uee NewTimestampRenderer to generate such a renderer.
 #### Config
-Error renderer config contains template file, only.
+Defines path to template file.
 ```yaml
 hdb:
-  error_response:
-    template: "error_response.json"
+  response:
+    template: "response.json"
 ```
 
-## Item Renderer
-Item renderers generates items which should be display on eInk screen. This can be simple text, geometric shapes or icons.
-### Indoor Climate Renderer
+### Error
+In case something went wrong during content genration, error renderer can be used to generate a suitable server response for an error. Use NewErrorRenderer for initialization.
+#### Config
+Defines path to template file.
+```yaml
+hdb:
+  error
+    template: "error.json"
+```
+
+### Indoor Climate
 This renderer listen to a data source for indoo climate, which includes temperature, humidity and, depending on used sensor, battery status. Indoor climate data
 can be processed for diferent devices and can be assigned by config to seperate rooms.
 Same template is used for each room and all rooms will be displayed in a row until scrren width exceeds.
