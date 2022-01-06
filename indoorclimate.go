@@ -63,7 +63,7 @@ func (renderer *IndoorClimateRenderer) Content() (string, error) {
 			return "", err
 		}
 		content = content + elementContent
-		anchor.Y = anchor.Y + renderer.size.Width + renderer.spacing.Left + renderer.spacing.Right
+		anchor.X = anchor.X + renderer.size.Width + renderer.spacing.Left + renderer.spacing.Right
 	}
 	return content, nil
 }

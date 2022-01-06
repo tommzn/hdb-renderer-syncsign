@@ -24,7 +24,7 @@ func (suite *IndoorClimateTestSuite) TestGenerateContent() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "72ed7031fc3eb4e707cd78bdeda6e0acb2039ce6")
+	assertTemplateHash(suite.Assert(), content, "f4fad4e55d50506b3b5e9235754e9ae3eb05e9f0")
 }
 
 func (suite *IndoorClimateTestSuite) TestGenerateContentWithError() {
@@ -51,7 +51,7 @@ func (suite *IndoorClimateTestSuite) TestDataSourceObserving() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "72ed7031fc3eb4e707cd78bdeda6e0acb2039ce6")
+	assertTemplateHash(suite.Assert(), content, "f4fad4e55d50506b3b5e9235754e9ae3eb05e9f0")
 
 	ctx, cancelFunc := context.WithCancel(context.Background())
 	go renderer.ObserveDataSource(ctx)
@@ -71,7 +71,7 @@ func (suite *IndoorClimateTestSuite) TestDataSourceObserving() {
 	content2, err2 := renderer.Content()
 	suite.Nil(err2)
 	suite.True(strings.Contains(content2, newTemperature))
-	assertTemplateHash(suite.Assert(), content2, "0817ef3063f0e63752784f657401fbaa8995bf69")
+	assertTemplateHash(suite.Assert(), content2, "8d9f0e2b334864d8d741f9c245b8dce0fe209e76")
 
 	cancelFunc()
 }
