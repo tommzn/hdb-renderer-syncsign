@@ -135,12 +135,20 @@ func batteryIconColor(batteryValue string) textColor {
 // AppendItems appends passed items to given content, separated by default JSON element separattor: ",".
 // Leasing separators in content, or trailing separators in items will be removed.
 func appendItems(items, newItems string) string {
+	fmt.Println(items)
+	fmt.Println(newItems)
 	if newItems != "" {
 		newItems = strings.TrimPrefix(newItems, ",")
+		fmt.Println(newItems)
 		newItems = strings.TrimSuffix(newItems, ",")
+		fmt.Println(newItems)
 		items = strings.TrimPrefix(items, ",")
+		fmt.Println(items)
 		items = strings.TrimSuffix(items, ",")
+		fmt.Println(items)
 		items = items + "," + newItems
+		fmt.Println(items)
 	}
+	fmt.Println(items)
 	return strings.TrimPrefix(strings.TrimSuffix(items, ","), ",")
 }
