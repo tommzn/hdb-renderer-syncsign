@@ -135,28 +135,15 @@ func batteryIconColor(batteryValue string) textColor {
 // AppendItems appends passed items to given content, separated by default JSON element separattor: ",".
 // Leasing separators in content, or trailing separators in items will be removed.
 func appendItems(items, newItems string) string {
-	fmt.Println(items)
-	fmt.Println(strings.Repeat("=", 32))
-	fmt.Println(newItems)
-	fmt.Println(strings.Repeat("=", 32))
+	contents := []string{items}
 	if newItems != "" {
-		newItems = strings.TrimPrefix(newItems, ",")
-		fmt.Println(newItems)
-		fmt.Println(strings.Repeat("=", 32))
-		newItems = strings.TrimSuffix(newItems, ",")
-		fmt.Println(newItems)
-		fmt.Println(strings.Repeat("=", 32))
-		items = strings.TrimPrefix(items, ",")
-		fmt.Println(items)
-		fmt.Println(strings.Repeat("=", 32))
-		items = strings.TrimSuffix(items, ",")
-		fmt.Println(items)
-		fmt.Println(strings.Repeat("=", 32))
-		items = items + "," + newItems
-		fmt.Println(items)
-		fmt.Println(strings.Repeat("=", 32))
+		contents = append(contents, newItems)
 	}
-	fmt.Println(items)
-	fmt.Println(strings.Repeat("=", 32))
-	return strings.TrimPrefix(strings.TrimSuffix(items, ","), ",")
+	for idx, content := range contents {
+		content = strings.TrimSpace(content)
+		content = strings.TrimPrefix(content, ",")
+		content = strings.TrimSuffix(content, ",")
+		contents[idx] = content
+	}
+	return strings.Join(contents, ",")
 }
