@@ -31,6 +31,6 @@ func IOReadDir(root string) {
 		fmt.Println(err)
 	}
 	for _, file := range fileInfo {
-		fmt.Println(file.Name())
+		fmt.Println(file.Mode(), " ", root, "/", file.Name())
 	}
 }
