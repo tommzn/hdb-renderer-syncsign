@@ -140,11 +140,13 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 func (server *webServer) writeResponse(w http.ResponseWriter, content string) {
 	buf := &bytes.Buffer{}
 	err := json.Compact(buf, []byte(content))
-	if err != nil {
+	if err == nil {
+		minifiedContent := buf.Bytes()
+		w.Write(minifiedContent)
+	} else {
 		server.logger.Error("Failed to minity content, reason: ", err)
+		w.Write([]byte(content))
 	}
-	minifiedContent := buf.Bytes()
-	w.Write(minifiedContent)
 }
 
 // WriteResponseError will generate a error response and write it to given response writer.
