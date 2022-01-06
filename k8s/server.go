@@ -139,7 +139,10 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 // WriteResponse writes given content to response writer. If statusCode is not nil it's set as header.
 func (server *webServer) writeResponse(w http.ResponseWriter, content string) {
 	buf := &bytes.Buffer{}
-	json.Compact(buf, []byte(content))
+	err := json.Compact(buf, []byte(content))
+	if err != nil {
+		server.logger.Error("Failed to minity content, reason: ", err)
+	}
 	minifiedContent := buf.Bytes()
 	w.Write(minifiedContent)
 }
