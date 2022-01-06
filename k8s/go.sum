@@ -233,6 +233,8 @@ github.com/tommzn/hdb-renderer-syncsign v1.1.4 h1:0VcYhHq/ru7lm7EzKtvvGfYrWFLfCS
 github.com/tommzn/hdb-renderer-syncsign v1.1.4/go.mod h1:qo4wB3834vEB6sri8QvXk8lkQUOQteRZfrGFj382OsQ=
 github.com/tommzn/hdb-renderer-syncsign v1.1.5 h1:36kyRua+1b0Q2ByblmgDPFMYNrXLUr03OtPc0SU4MkI=
 github.com/tommzn/hdb-renderer-syncsign v1.1.5/go.mod h1:qo4wB3834vEB6sri8QvXk8lkQUOQteRZfrGFj382OsQ=
+github.com/tommzn/hdb-renderer-syncsign v1.1.6 h1:Uo+r+wfjc+dVYCx0ydXj5GPFf4TN9wcN9140iJRXnoA=
+github.com/tommzn/hdb-renderer-syncsign v1.1.6/go.mod h1:qo4wB3834vEB6sri8QvXk8lkQUOQteRZfrGFj382OsQ=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
