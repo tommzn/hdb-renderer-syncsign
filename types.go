@@ -3,6 +3,7 @@ package syncsign
 import (
 	"github.com/golang/protobuf/proto"
 	log "github.com/tommzn/go-log"
+	events "github.com/tommzn/hdb-events-go"
 	core "github.com/tommzn/hdb-renderer-core"
 )
 
@@ -78,4 +79,27 @@ type responseData struct {
 type ErrorRenderer struct {
 	template core.Template
 	err      error
+}
+
+type billingReportData struct {
+	Anchor core.Point
+	Period string
+	Amount string
+}
+
+type billingReportAmount struct {
+	Amount   float64
+	Currency string
+}
+
+type BillingReportRenderer struct {
+	template        core.Template
+	anchor          core.Point
+	logger          log.Logger
+	reportCurrency  string
+	displayCurrency string
+	datasource      core.DataSource
+	dataSourceChan  <-chan proto.Message
+	billingReport   *billingReportData
+	exchangeRates   map[string]*events.ExchangeRate
 }

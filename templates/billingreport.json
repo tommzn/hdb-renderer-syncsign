@@ -1,0 +1,51 @@
+{
+    "type": "TEXT",
+    "data": {
+        "text": "\uf375",
+        "id": "hdb.billingreport.icon",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "ICON_FA_BRANDS",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ .Anchor.X }},
+            "y": {{ .Anchor.Y }},
+            "w": 72,
+            "h": 44
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Amount }}",
+        "id": "hdb.billingreport.amount",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ add .Anchor.X 75 }},
+            "y": {{ .Anchor.Y }},
+            "w": 72,
+            "h": 44
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Period }}°",
+        "id": "hdb.billingreport.period",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ add .Anchor.X 75 }},
+            "y": {{ add .Anchor.Y 45 }},
+            "w": 72,
+            "h": 44
+        }
+    }
+}

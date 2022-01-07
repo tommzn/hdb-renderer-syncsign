@@ -1,0 +1,8 @@
+
+hdb:
+  billingreport:
+    template: billingreport.json
+    anchor:
+      "x": 800
+      "y": 10
+    report_currency: USD

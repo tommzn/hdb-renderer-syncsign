@@ -12,16 +12,20 @@ import (
 type datasourceMock struct {
 	shouldReturnError bool
 	shouldReturnEmpty bool
-	data              []proto.Message
+	data              map[hdbcore.DataSource][]proto.Message
 	eventChan         chan proto.Message
 }
 
-func newDataSourceMock(shouldReturnError, shouldReturnEmpty bool, data []proto.Message) core.DataSource {
+func newDataSourceMock(shouldReturnError, shouldReturnEmpty bool, data map[hdbcore.DataSource][]proto.Message) core.DataSource {
+	chanLen := 0
+	for _, messages := range data {
+		chanLen += len(messages)
+	}
 	return &datasourceMock{
 		shouldReturnError: shouldReturnError,
 		shouldReturnEmpty: shouldReturnError,
 		data:              data,
-		eventChan:         make(chan proto.Message, len(data)+1),
+		eventChan:         make(chan proto.Message, chanLen+10),
 	}
 }
 
@@ -30,7 +34,7 @@ func (mock *datasourceMock) Latest(datasource hdbcore.DataSource) (proto.Message
 	if mock.shouldReturnError || mock.shouldReturnEmpty {
 		return nil, errors.New("Error occured!")
 	}
-	return mock.data[len(mock.data)-1], nil
+	return mock.data[datasource][len(mock.data[datasource])-1], nil
 }
 
 func (mock *datasourceMock) All(datasource hdbcore.DataSource) ([]proto.Message, error) {
@@ -42,13 +46,22 @@ func (mock *datasourceMock) All(datasource hdbcore.DataSource) ([]proto.Message,
 	if mock.shouldReturnEmpty {
 		return events, nil
 	}
-	return mock.data, nil
+	return mock.data[datasource], nil
 }
 
 func (mock *datasourceMock) Observe(filter *[]hdbcore.DataSource) <-chan proto.Message {
 
-	for _, message := range mock.data {
-		mock.eventChan <- message
+	if filter != nil {
+		for _, datasource := range *filter {
+			for _, message := range mock.data[datasource] {
+				mock.eventChan <- message
+			}
+		}
+	}
+	for _, messages := range mock.data {
+		for _, message := range messages {
+			mock.eventChan <- message
+		}
 	}
 	return mock.eventChan
 }

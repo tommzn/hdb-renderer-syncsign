@@ -86,6 +86,7 @@ func (f *factory) newIndoorClimateDataSource() core.DataSource {
 	if f.indoorClimateDataSource == nil {
 		f.indoorClimateDataSource = newDataSourceMock(f.indoorClimateDevices())
 		f.indoorClimateDataSource.(*dataSourceMock).initMessages()
+		go f.indoorClimateDataSource.(*dataSourceMock).Run(f.ctx)
 	}
 	return f.indoorClimateDataSource
 }

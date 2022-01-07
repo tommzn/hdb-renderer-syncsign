@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/golang/protobuf v1.5.2
+	github.com/leekchan/accounting v1.0.0
 	github.com/stretchr/testify v1.7.0
 	github.com/tommzn/go-config v1.0.5
 	github.com/tommzn/go-log v1.1.0

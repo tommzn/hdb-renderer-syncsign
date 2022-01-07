@@ -11,6 +11,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
+	hdbcore "github.com/tommzn/hdb-core"
 	events "github.com/tommzn/hdb-events-go"
 	core "github.com/tommzn/hdb-renderer-core"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -31,6 +32,12 @@ func loadConfigForTest(fileName *string) config.Config {
 
 func loggerForTest() log.Logger {
 	return log.NewLogger(log.Debug, nil, nil)
+}
+
+func billingReportRendererForTest(configFile string) *BillingReportRenderer {
+	datasource := newDataSourceMock(false, false, fixturesForBillingReportRenderer())
+	conf := loadConfigForTest(config.AsStringPtr(configFile))
+	return NewBillingReportRenderer(conf, loggerForTest(), templateQithFileForTest("templates/billingreport.json"), datasource)
 }
 
 func indoorClimateRendererForTest(configFile string) *IndoorClimateRenderer {
@@ -60,9 +67,9 @@ func failingTemplateForTest() core.Template {
 	return newFailingTemplate()
 }
 
-func indoorClimateDataForTest() []proto.Message {
+func indoorClimateDataForTest() map[hdbcore.DataSource][]proto.Message {
 
-	return []proto.Message{
+	messages := []proto.Message{
 		&events.IndoorClimate{
 			Timestamp: timestamppb.New(time.Now()),
 			DeviceId:  "Device2",
@@ -98,6 +105,43 @@ func indoorClimateDataForTest() []proto.Message {
 			DeviceId:  "Device1",
 			Type:      events.MeasurementType_BATTERY,
 			Value:     "97",
+		},
+	}
+	events := make(map[hdbcore.DataSource][]proto.Message)
+	events[hdbcore.DATASOURCE_INDOORCLIMATE] = messages
+	return events
+}
+
+func fixturesForBillingReportRenderer() map[hdbcore.DataSource][]proto.Message {
+	events := make(map[hdbcore.DataSource][]proto.Message)
+	events[hdbcore.DATASOURCE_BILLINGREPORT] = billingReportForTest()
+	events[hdbcore.DATASOURCE_EXCHANGERATE] = exchangeRateForTest()
+	return events
+}
+
+func exchangeRateForTest() []proto.Message {
+	return []proto.Message{
+		&events.ExchangeRate{
+			FromCurrency: "USD",
+			ToCurrency:   "EUR",
+			Rate:         0.8345,
+			Timestamp:    timestamppb.New(time.Now()),
+		},
+	}
+}
+
+func billingReportForTest() []proto.Message {
+	billingAmount := make(map[string]float64)
+	taxAmount := make(map[string]float64)
+	billingAmount["xxx"] = 5.14
+	billingAmount["zzz"] = 12.53
+	taxAmount["xxx"] = 0.87
+	taxAmount["zzz"] = 2.15
+	return []proto.Message{
+		&events.BillingReport{
+			BillingPeriod: "Jan 2022",
+			BillingAmount: billingAmount,
+			TaxAmount:     taxAmount,
 		},
 	}
 }

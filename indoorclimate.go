@@ -2,7 +2,6 @@ package syncsign
 
 import (
 	"context"
-	"fmt"
 	"sort"
 
 	"github.com/golang/protobuf/proto"
@@ -17,7 +16,6 @@ import (
 func NewIndoorClimateRenderer(conf config.Config, logger log.Logger, template core.Template, datasource core.DataSource) *IndoorClimateRenderer {
 
 	anchor := anchorFromConfig(conf, "hdb.indoorclimate.anchor")
-	fmt.Printf("Anchor, X: %d, Y: %d\n", anchor.X, anchor.Y)
 	size := sizeFromConfig(conf, "hdb.indoorclimate.size")
 	spacing := spacingFromConfig(conf, "hdb.indoorclimate.spacing")
 	roomCfg := configForRooms(conf, "hdb.indoorclimate")

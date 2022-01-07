@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/leekchan/accounting"
 	config "github.com/tommzn/go-config"
 	core "github.com/tommzn/hdb-renderer-core"
 )
@@ -146,4 +147,22 @@ func appendItems(items, newItems string) string {
 		contents[idx] = content
 	}
 	return strings.Join(contents, ",")
+}
+
+func keyForExchangeRate(fromCurrency, toCurrency string) string {
+	return fmt.Sprintf("%s-%s", fromCurrency, toCurrency)
+}
+
+func formatForCurrency(amount billingReportAmount) string {
+
+	ac := accounting.Accounting{Precision: 2}
+	switch amount.Currency {
+	case "USD":
+		ac.Symbol = "$"
+	case "EUR":
+		ac.Symbol = "€"
+		ac.Thousand = "."
+		ac.Decimal = ","
+	}
+	return ac.FormatMoney(amount.Amount)
 }
