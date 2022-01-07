@@ -74,6 +74,8 @@ func (mock *dataSourceMock) initMessages() {
 			mock.writeToChannel(message, hdbcore.DATASOURCE_INDOORCLIMATE)
 		}
 	}
+	mock.publisBillingReport()
+	mock.publisExchangeRate()
 }
 
 func (mock *dataSourceMock) publishNewMessage() {
@@ -95,6 +97,38 @@ func (mock *dataSourceMock) publishNewMessage() {
 	}
 	mock.appendToStack(message, hdbcore.DATASOURCE_INDOORCLIMATE)
 	mock.writeToChannel(message, hdbcore.DATASOURCE_INDOORCLIMATE)
+
+	mock.publisBillingReport()
+	mock.publisExchangeRate()
+}
+
+func (mock *dataSourceMock) publisBillingReport() {
+
+	billingAmount := make(map[string]float64)
+	taxAmount := make(map[string]float64)
+	billingAmount["xxx"] = 5.14
+	billingAmount["zzz"] = 12.53
+	taxAmount["xxx"] = 0.87
+	taxAmount["zzz"] = 2.15
+	billingReport := &events.BillingReport{
+		BillingPeriod: "Jan 2022",
+		BillingAmount: billingAmount,
+		TaxAmount:     taxAmount,
+	}
+	mock.appendToStack(billingReport, hdbcore.DATASOURCE_BILLINGREPORT)
+	mock.writeToChannel(billingReport, hdbcore.DATASOURCE_BILLINGREPORT)
+}
+
+func (mock *dataSourceMock) publisExchangeRate() {
+
+	exchangeRate := &events.ExchangeRate{
+		FromCurrency: "USD",
+		ToCurrency:   "EUR",
+		Rate:         0.8345,
+		Timestamp:    timestamppb.New(time.Now()),
+	}
+	mock.appendToStack(exchangeRate, hdbcore.DATASOURCE_EXCHANGERATE)
+	mock.writeToChannel(exchangeRate, hdbcore.DATASOURCE_EXCHANGERATE)
 }
 
 func (mock *dataSourceMock) randomSelectMeasurementType() events.MeasurementType {
@@ -108,13 +142,13 @@ func (mock *dataSourceMock) randomSelectDeviceId() string {
 }
 
 func (mock *dataSourceMock) appendToStack(message proto.Message, datasource hdbcore.DataSource) {
-	if events, ok := mock.events[hdbcore.DATASOURCE_INDOORCLIMATE]; ok {
+	if events, ok := mock.events[datasource]; ok {
 		if len(events) == mock.stackSize {
 			events = events[1:]
 		}
-		mock.events[hdbcore.DATASOURCE_INDOORCLIMATE] = append(events, message)
+		mock.events[datasource] = append(events, message)
 	} else {
-		mock.events[hdbcore.DATASOURCE_INDOORCLIMATE] = []proto.Message{message}
+		mock.events[datasource] = []proto.Message{message}
 	}
 }
 

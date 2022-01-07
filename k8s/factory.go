@@ -46,6 +46,13 @@ func (f *factory) newTimestampTemplate() core.Template {
 	return f.timestampTemplate
 }
 
+func (f *factory) newBillingReportTemplate() core.Template {
+	if f.billingReportTemplate == nil {
+		f.billingReportTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.billingreport.template")
+	}
+	return f.billingReportTemplate
+}
+
 func (f *factory) newTimestampRenderer() core.Renderer {
 	return syncsign.NewTimestampRenderer(f.newTimestampTemplate())
 }
@@ -66,6 +73,7 @@ func (f *factory) newResponseRenderer(nodeId string) core.Renderer {
 	if _, ok := f.responseRenderer[nodeId]; !ok {
 		itemRenderer := []core.Renderer{
 			f.newIndoorClimateRenderer(),
+			f.newBillingReportRenderer(),
 			f.newTimestampRenderer(),
 		}
 		f.responseRenderer[nodeId] = syncsign.NewResponseRenderer(f.newResponseRendererTemplate(), nodeId, itemRenderer)
@@ -82,6 +90,15 @@ func (f *factory) newIndoorClimateRenderer() core.Renderer {
 	return f.indoorClimateRenderer
 }
 
+func (f *factory) newBillingReportRenderer() core.Renderer {
+	if f.billingReportRenderer == nil {
+		renderer := syncsign.NewBillingReportRenderer(f.conf, f.logger, f.newBillingReportTemplate(), f.newBillingReportDataSource())
+		go renderer.ObserveDataSource(f.ctx)
+		f.billingReportRenderer = renderer
+	}
+	return f.billingReportRenderer
+}
+
 func (f *factory) newIndoorClimateDataSource() core.DataSource {
 	if f.indoorClimateDataSource == nil {
 		f.indoorClimateDataSource = newDataSourceMock(f.indoorClimateDevices())
@@ -89,6 +106,10 @@ func (f *factory) newIndoorClimateDataSource() core.DataSource {
 		go f.indoorClimateDataSource.(*dataSourceMock).Run(f.ctx)
 	}
 	return f.indoorClimateDataSource
+}
+
+func (f *factory) newBillingReportDataSource() core.DataSource {
+	return f.newIndoorClimateDataSource()
 }
 
 func (f *factory) indoorClimateDevices() []string {

@@ -26,9 +26,11 @@ type factory struct {
 	errorTemplate           core.Template
 	responseTemplate        core.Template
 	indoorClimateTemplate   core.Template
+	billingReportTemplate   core.Template
 	timestampTemplate       core.Template
 	indoorClimateRenderer   core.Renderer
 	indoorClimateDataSource core.DataSource
+	billingReportRenderer   core.Renderer
 	responseRenderer        map[string]core.Renderer
 	displayConfig           *syncsign.DisplayConfig
 }

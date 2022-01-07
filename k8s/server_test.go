@@ -87,7 +87,7 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	resData := suite.asTestResponse(resBody2)
 	suite.Len(resData.Data, 1)
 	suite.Equal(nodeId, resData.Data[0].NodeId)
-	suite.Len(resData.Data[0].Content.Items, 9)
+	suite.Len(resData.Data[0].Content.Items, 12)
 	suite.stopServer()
 }
 

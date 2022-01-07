@@ -8,6 +8,13 @@ hdb:
     - id: Display01
     - id: Display02
     - id: Display03
+  billingreport:
+    template: billingreport.json
+    anchor:
+      "x": 800
+      "y": 10
+    report_currency: USD
+    display_currency: EUR
   error:
     template: "error.json"
   timestamp:
