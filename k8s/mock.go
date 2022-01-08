@@ -19,7 +19,7 @@ type dataSourceMock struct {
 	logger               log.Logger
 	indoorClimateDevices []string
 	measurementTypes     []events.MeasurementType
-	currentValues        map[events.MeasurementType]float64
+	currentValues        map[string]map[events.MeasurementType]float64
 	publishInterval      time.Duration
 	stackSize            int
 	events               map[hdbcore.DataSource][]proto.Message
@@ -37,7 +37,7 @@ func newDataSourceMock(indoorClimateDevices []string, logger log.Logger) core.Da
 			events.MeasurementType_HUMIDITY,
 			events.MeasurementType_BATTERY,
 		},
-		currentValues:   make(map[events.MeasurementType]float64),
+		currentValues:   make(map[string]map[events.MeasurementType]float64),
 		publishInterval: 10 * time.Second,
 		stackSize:       100,
 		events:          make(map[hdbcore.DataSource][]proto.Message),
@@ -63,7 +63,7 @@ func (mock *dataSourceMock) initMessages() {
 	for _, deviceId := range mock.indoorClimateDevices {
 		for _, measurementType := range mock.measurementTypes {
 
-			currentValue, ok := mock.currentValues[measurementType]
+			currentValue, ok := mock.currentValues[deviceId][measurementType]
 			if !ok {
 				currentValue = defauktValueForMeasurementType(measurementType)
 			}
@@ -86,12 +86,13 @@ func (mock *dataSourceMock) publishNewMessage() {
 	measurementType := mock.randomSelectMeasurementType()
 	deviceId := mock.randomSelectDeviceId()
 
-	currentValue, ok := mock.currentValues[measurementType]
+	currentValue, ok := mock.currentValues[deviceId][measurementType]
 	if !ok {
+		mock.currentValues[deviceId] = make(map[events.MeasurementType]float64)
 		currentValue = defauktValueForMeasurementType(measurementType)
 	}
 	newValue := newValueForMeasurementType(measurementType, currentValue)
-	mock.currentValues[measurementType] = newValue
+	mock.currentValues[deviceId][measurementType] = newValue
 	message := &events.IndoorClimate{
 		Timestamp: timestamppb.New(time.Now()),
 		DeviceId:  deviceId,
@@ -222,26 +223,17 @@ func formatValue(measurementType events.MeasurementType, value float64) string {
 }
 
 func newValueForMeasurementType(measurementType events.MeasurementType, currentValue float64) float64 {
-
-	rand.Seed(time.Now().UnixNano())
-	step := 0.0
+	steps := []float64{}
 	switch measurementType {
 	case events.MeasurementType_HUMIDITY:
-		if rand.Intn(100) > 50 {
-			step = 1.0
-		} else {
-			step = -1.0
-		}
+		steps = []float64{1.0, -1.0}
 	case events.MeasurementType_BATTERY:
-		step = -1.0
+		steps = []float64{0.0, -1.0}
 	default: // e.g. events.MeasurementType_TEMPERATURE
-		if rand.Intn(100) > 50 {
-			step = 0.1
-		} else {
-			step = -0.1
-		}
+		steps = []float64{0.1, -0.1}
 	}
-	return currentValue + step
+	rand.Seed(time.Now().UnixNano())
+	return currentValue + steps[rand.Int()%len(steps)]
 }
 
 func defauktValueForMeasurementType(measurementType events.MeasurementType) float64 {
