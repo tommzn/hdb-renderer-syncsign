@@ -1,12 +1,9 @@
-FROM alpine:latest
-
-RUN apk add --no-cache ca-certificates
+FROM arm64v8/alpine:latest
 
 WORKDIR /go
 
-COPY build_artifact_bin hdb-bin
+COPY --chmod=0755 build_artifact_bin hdb-bin
 ADD templates/ templates/
 COPY fixtures/testconfig.yml config.yml
 
-RUN chmod 755 /go/hdb-bin
 ENTRYPOINT ["/go/hdb-bin"]
