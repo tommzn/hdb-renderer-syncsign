@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
+	log "github.com/tommzn/go-log"
 	hdbcore "github.com/tommzn/hdb-core"
 	events "github.com/tommzn/hdb-events-go"
 	core "github.com/tommzn/hdb-renderer-core"
@@ -15,6 +16,7 @@ import (
 )
 
 type dataSourceMock struct {
+	logger               log.Logger
 	indoorClimateDevices []string
 	measurementTypes     []events.MeasurementType
 	currentValues        map[events.MeasurementType]float64
@@ -25,9 +27,10 @@ type dataSourceMock struct {
 	chanFilter           []hdbcore.DataSource
 }
 
-func newDataSourceMock(indoorClimateDevices []string) core.DataSource {
+func newDataSourceMock(indoorClimateDevices []string, logger log.Logger) core.DataSource {
 
 	return &dataSourceMock{
+		logger:               logger,
 		indoorClimateDevices: indoorClimateDevices,
 		measurementTypes: []events.MeasurementType{
 			events.MeasurementType_TEMPERATURE,
@@ -153,10 +156,13 @@ func (mock *dataSourceMock) appendToStack(message proto.Message, datasource hdbc
 }
 
 func (mock *dataSourceMock) writeToChannel(message proto.Message, datasource hdbcore.DataSource) {
+	mock.logger.Debugf("Publish new event to %s", datasource)
 	if mock.isInFilter(datasource) &&
 		len(mock.eventChan) < cap(mock.eventChan) {
 		mock.eventChan <- message
+		return
 	}
+	mock.logger.Debugf("No subscription for datasource or chanel blocked %d/%d", datasource, len(mock.eventChan), cap(mock.eventChan))
 }
 
 func (mock *dataSourceMock) isInFilter(datasource hdbcore.DataSource) bool {
@@ -188,10 +194,20 @@ func (mock *dataSourceMock) All(datasource hdbcore.DataSource) ([]proto.Message,
 }
 
 func (mock *dataSourceMock) Observe(filter *[]hdbcore.DataSource) <-chan proto.Message {
-	if filter != nil {
-		mock.chanFilter = *filter
-	}
+	mock.appendToDataSourceFilter(filter)
 	return mock.eventChan
+}
+
+func (mock *dataSourceMock) appendToDataSourceFilter(filter *[]hdbcore.DataSource) {
+	if filter != nil {
+		if mock.chanFilter == nil || len(mock.chanFilter) == 0 {
+			mock.chanFilter = *filter
+		} else {
+			for _, datasource := range *filter {
+				mock.chanFilter = append(mock.chanFilter, datasource)
+			}
+		}
+	}
 }
 
 func formatValue(measurementType events.MeasurementType, value float64) string {

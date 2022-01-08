@@ -101,7 +101,7 @@ func (f *factory) newBillingReportRenderer() core.Renderer {
 
 func (f *factory) newIndoorClimateDataSource() core.DataSource {
 	if f.indoorClimateDataSource == nil {
-		f.indoorClimateDataSource = newDataSourceMock(f.indoorClimateDevices())
+		f.indoorClimateDataSource = newDataSourceMock(f.indoorClimateDevices(), f.logger)
 		f.indoorClimateDataSource.(*dataSourceMock).initMessages()
 		go f.indoorClimateDataSource.(*dataSourceMock).Run(f.ctx)
 	}

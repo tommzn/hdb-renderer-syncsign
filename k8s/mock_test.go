@@ -20,7 +20,7 @@ func TestDataSourceMockTestSuite(t *testing.T) {
 func (suite *DataSourceMockTestSuite) TestPublishRandomEvents() {
 
 	displays := []string{"Display1", "Display3", "Display7"}
-	mock := newDataSourceMock(displays)
+	mock := newDataSourceMock(displays, loggerForTest())
 	mock.(*dataSourceMock).publishInterval = 1 * time.Second
 	eventChan := mock.Observe(nil)
 
@@ -53,7 +53,7 @@ func (suite *DataSourceMockTestSuite) TestPublishRandomEvents() {
 func (suite *DataSourceMockTestSuite) TestStackLimit() {
 
 	displays := []string{"Display1", "Display3", "Display7"}
-	mock := newDataSourceMock(displays)
+	mock := newDataSourceMock(displays, loggerForTest())
 	mock.(*dataSourceMock).publishInterval = 10 * time.Millisecond
 	filter := []hdbcore.DataSource{hdbcore.DATASOURCE_INDOORCLIMATE}
 	eventChan := mock.Observe(&filter)
@@ -79,7 +79,7 @@ func (suite *DataSourceMockTestSuite) TestStackLimit() {
 func (suite *DataSourceMockTestSuite) TestInitiMessages() {
 
 	displays := []string{"Display1", "Display3", "Display7"}
-	mock := newDataSourceMock(displays)
+	mock := newDataSourceMock(displays, loggerForTest())
 
 	mock.(*dataSourceMock).initMessages()
 
