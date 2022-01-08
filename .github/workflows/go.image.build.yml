@@ -37,6 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./k8s
+          file: ./k8s/Dockerfile.${{ matrix.arch }}
           push: true
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.arch }}:${{ steps.release.outputs.tag }}
