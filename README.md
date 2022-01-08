@@ -34,6 +34,29 @@ hdb:
     template: "response.json"
 ```
 
+### Billing Report
+Billing report renderer subsribes to a datasource which provides [BillingReport](https://github.com/tommzn/hdb-events-go/blob/main/billingreport.pb.go) and [Exchange Rate](https://github.com/tommzn/hdb-events-go/blob/main/exchangerate.pb.go) events to visialize cost for AWS usage.
+#### Config
+Defines path to template file, set anchor and used currencies.
+```yaml
+hdb:
+   billingreport:
+    template: billingreport.json
+    anchor:
+      "x": 720
+      "y": 10
+    report_currency: USD
+    display_currency: EUR
+```
+##### Template
+Config option to set template file which should be used generate billing report items.
+##### Anchor
+An anchor defines the upper left corner of billing report elements.
+##### report_currency
+Currency used in BillingReport events.
+##### display_currency
+Currency billing report amount shpuld be displayed in. If display_currency differs from report_currency, the exchange rate datasource have to provide such an exchange rate. If there's no suitable exchange rate, billing report amount will be rendered in report_currency.
+
 ### Error
 In case something went wrong during content genration, error renderer can be used to generate a suitable server response for an error. Use NewErrorRenderer for initialization.
 #### Config
