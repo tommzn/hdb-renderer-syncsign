@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/leekchan/accounting"
 	config "github.com/tommzn/go-config"
 	core "github.com/tommzn/hdb-renderer-core"
 )
@@ -154,15 +153,12 @@ func keyForExchangeRate(fromCurrency, toCurrency string) string {
 }
 
 func formatForCurrency(amount billingReportAmount) string {
-
-	ac := accounting.Accounting{Precision: 2}
 	switch amount.Currency {
 	case "USD":
-		ac.Symbol = "$"
+		return fmt.Sprintf("$%.2f", amount.Amount)
 	case "EUR":
-		ac.Symbol = "€"
-		ac.Thousand = "."
-		ac.Decimal = ","
+		return strings.ReplaceAll(fmt.Sprintf("€%.2f", amount.Amount), ".", ",")
+	default:
+		return fmt.Sprintf("%.2f", amount.Amount)
 	}
-	return ac.FormatMoney(amount.Amount)
 }
