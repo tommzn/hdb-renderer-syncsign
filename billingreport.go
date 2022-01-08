@@ -77,6 +77,7 @@ func (renderer *BillingReportRenderer) ObserveDataSource(ctx context.Context) {
 				renderer.logger.Error("Error at reading datasource channel. Stop observing!")
 				return
 			}
+			renderer.logger.Debug("Event received from datasource.")
 			renderer.processEvent(message)
 		case <-ctx.Done():
 			renderer.logger.Info("Camceled, stop observing.")
@@ -89,9 +90,11 @@ func (renderer *BillingReportRenderer) ObserveDataSource(ctx context.Context) {
 func (renderer *BillingReportRenderer) processEvent(message proto.Message) {
 
 	if billingReport, ok := message.(*events.BillingReport); ok {
+		renderer.logger.Debugf("Receive new billing report for %s", billingReport.BillingPeriod)
 		renderer.calculateBillingReport(billingReport)
 	}
 	if exchangeRate, ok := message.(*events.ExchangeRate); ok {
+		renderer.logger.Debugf("Receive new exchange rate %s/%s", exchangeRate.FromCurrency, exchangeRate.ToCurrency)
 		renderer.assignExchangeRate(exchangeRate)
 	}
 }

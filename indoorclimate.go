@@ -82,6 +82,7 @@ func (renderer *IndoorClimateRenderer) ObserveDataSource(ctx context.Context) {
 				renderer.logger.Error("Error at reading datasource channel. Stop observing!")
 				return
 			}
+			renderer.logger.Debug("Event received from datasource.")
 			renderer.addAsIndoorClimateData(message)
 		case <-ctx.Done():
 			renderer.logger.Info("Camceled, stop observing.")
@@ -111,6 +112,7 @@ func (renderer *IndoorClimateRenderer) initIndoorClimateData() {
 func (renderer *IndoorClimateRenderer) addAsIndoorClimateData(message proto.Message) {
 
 	if indoorClimate, ok := message.(*events.IndoorClimate); ok {
+		renderer.logger.Debugf("Receive new indoor climate data, %s, %s", indoorClimate.Type, indoorClimate.Value)
 		if roomId, ok := renderer.roomCfg.deviceMap[indoorClimate.DeviceId]; ok {
 			roomClimate := renderer.getRoomClimate(roomId)
 			switch indoorClimate.Type {
