@@ -153,12 +153,5 @@ func keyForExchangeRate(fromCurrency, toCurrency string) string {
 }
 
 func formatForCurrency(amount billingReportAmount) string {
-	switch amount.Currency {
-	case "USD":
-		return fmt.Sprintf("$%.2f", amount.Amount)
-	case "EUR":
-		return strings.ReplaceAll(fmt.Sprintf("€%.2f", amount.Amount), ".", ",")
-	default:
-		return fmt.Sprintf("%.2f", amount.Amount)
-	}
+	return fmt.Sprintf("%.2f %s", amount.Amount, amount.Currency)
 }
