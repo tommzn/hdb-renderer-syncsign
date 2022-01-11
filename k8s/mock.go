@@ -226,11 +226,11 @@ func newValueForMeasurementType(measurementType events.MeasurementType, currentV
 	steps := []float64{}
 	switch measurementType {
 	case events.MeasurementType_HUMIDITY:
-		steps = []float64{1.0, -1.0}
+		steps = []float64{1.0, -1.0, 2.0, -2.0, 3.0, -3.0}
 	case events.MeasurementType_BATTERY:
-		steps = []float64{0.0, -1.0}
+		steps = []float64{0.0, -1.0, -2.0}
 	default: // e.g. events.MeasurementType_TEMPERATURE
-		steps = []float64{0.1, -0.1}
+		steps = []float64{0.1, -0.1, 0.2, -0.2, 0.3, -0.3}
 	}
 	rand.Seed(time.Now().UnixNano())
 	return currentValue + steps[rand.Int()%len(steps)]
