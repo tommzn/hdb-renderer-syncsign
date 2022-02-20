@@ -1,4 +1,5 @@
-name: Image Build
+
+name: Image Build (AMD64)
 on:
   create:
     tags:
@@ -8,13 +9,10 @@ jobs:
   go-build:
     name: Go Binary & Image Build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [amd64, arm64]
     steps:
       - name: Set version tag
         id: release
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/*/}
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Get Go version
@@ -25,7 +23,7 @@ jobs:
         with:
           go-version: ${{ env.goversion }}
       - name: Build Binary
-        run: CGO_ENABLED=0 GOOS=linux GOARCH=${{ matrix.arch }} go build -a -installsuffix cgo -v -o build_artifact_bin
+        run: CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -v -o build_artifact_bin
         working-directory: ./k8s
       - name: Log in to GitHub Docker Registry
         uses: docker/login-action@v1
@@ -37,10 +35,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./k8s
-          file: ./k8s/Dockerfile.${{ matrix.arch }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/${{ matrix.arch }}:${{ steps.release.outputs.tag }}
-            ghcr.io/${{ github.repository }}/${{ matrix.arch }}:latest
+            ghcr.io/${{ github.repository }}/amd64:${{ steps.release.outputs.tag }}
+            ghcr.io/${{ github.repository }}/amd64:latest
   
         
