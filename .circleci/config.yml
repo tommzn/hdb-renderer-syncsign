@@ -14,7 +14,7 @@ jobs:
           working_directory: k8s
           name: Build Image
           command: |
-            IMAGE_TAG="$(git tag -l k8s/v* --sort=authordate | tail  -n 1)"
+            IMAGE_TAG="$(git tag -l k8s/v* --sort=authordate | tail  -n 1 | sed 's/k8s\///')"
             echo Image Tag $IMAGE_TAG
             docker build -t $GHCR_REPOSITORY:$IMAGE_TAG -f Dockerfile.arm64 .
             docker tag $GHCR_REPOSITORY:$IMAGE_TAG $GHCR_REPOSITORY:latest
