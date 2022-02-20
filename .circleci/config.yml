@@ -33,5 +33,5 @@ workflows:
             tags:
               only: /^k8s\/v[0-9]+(\.[0-9]+)*$/
             branches:
-              only: main
+              ignore: /.*/
           
