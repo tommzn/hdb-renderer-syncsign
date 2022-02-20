@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Set version tag
         id: release
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/tags/k8s/*/}
+        run: echo ::set-output name=tag::${GITHUB_REF#k8s/*/}
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Get Go version
