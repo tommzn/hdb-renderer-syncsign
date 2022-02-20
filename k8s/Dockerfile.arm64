@@ -1,9 +1,20 @@
-FROM arm64v8/alpine:latest
+FROM arm64v8/golang:1.16-alpine as builder
+
+WORKDIR /build
+
+COPY . .
+
+RUN apk add build-base librdkafka-dev pkgconf
+
+RUN go build -tags dynamic -v -o build_artifact_bin
+
+FROM arm64v8/golang:1.16-alpine
+
+RUN apk add --no-cache ca-certificates build-base librdkafka-dev pkgconf
 
 WORKDIR /go
 
-COPY --chmod=0755 build_artifact_bin hdb-bin
-ADD templates/ templates/
-COPY fixtures/testconfig.yml config.yml
+COPY --from=builder /build/build_artifact_bin hdb-bin
 
+RUN chmod 755 /go/hdb-bin
 ENTRYPOINT ["/go/hdb-bin"]
