@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"sync"
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
+	datasource "github.com/tommzn/hdb-message-client"
 	core "github.com/tommzn/hdb-renderer-core"
 	syncsign "github.com/tommzn/hdb-renderer-syncsign"
 )
@@ -14,6 +16,7 @@ func newFactory(conf config.Config, logger log.Logger, ctx context.Context) *fac
 		conf:             conf,
 		logger:           logger,
 		ctx:              ctx,
+		wg:               &sync.WaitGroup{},
 		responseRenderer: make(map[string]core.Renderer),
 	}
 }
@@ -101,9 +104,10 @@ func (f *factory) newBillingReportRenderer() core.Renderer {
 
 func (f *factory) newIndoorClimateDataSource() core.DataSource {
 	if f.indoorClimateDataSource == nil {
-		f.indoorClimateDataSource = newDataSourceMock(f.indoorClimateDevices(), f.logger)
-		f.indoorClimateDataSource.(*dataSourceMock).initMessages()
-		go f.indoorClimateDataSource.(*dataSourceMock).Run(f.ctx)
+		indoorClimateDataSource := datasource.New(f.conf, f.logger)
+		f.wg.Add(1)
+		go indoorClimateDataSource.Run(f.ctx, f.wg)
+		f.indoorClimateDataSource = indoorClimateDataSource
 	}
 	return f.indoorClimateDataSource
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"net/http"
+	"sync"
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
@@ -23,6 +24,7 @@ type factory struct {
 	conf                    config.Config
 	logger                  log.Logger
 	ctx                     context.Context
+	wg                      *sync.WaitGroup
 	errorTemplate           core.Template
 	responseTemplate        core.Template
 	indoorClimateTemplate   core.Template
