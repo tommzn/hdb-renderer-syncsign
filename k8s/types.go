@@ -21,20 +21,20 @@ type webServer struct {
 }
 
 type factory struct {
-	conf                    config.Config
-	logger                  log.Logger
-	ctx                     context.Context
-	wg                      *sync.WaitGroup
-	errorTemplate           core.Template
-	responseTemplate        core.Template
-	indoorClimateTemplate   core.Template
-	billingReportTemplate   core.Template
-	timestampTemplate       core.Template
-	indoorClimateRenderer   core.Renderer
-	indoorClimateDataSource core.DataSource
-	billingReportRenderer   core.Renderer
-	responseRenderer        map[string]core.Renderer
-	displayConfig           *syncsign.DisplayConfig
+	conf                  config.Config
+	logger                log.Logger
+	ctx                   context.Context
+	wg                    *sync.WaitGroup
+	dataSource            core.DataSource
+	errorTemplate         core.Template
+	responseTemplate      core.Template
+	indoorClimateTemplate core.Template
+	billingReportTemplate core.Template
+	timestampTemplate     core.Template
+	indoorClimateRenderer core.Renderer
+	billingReportRenderer core.Renderer
+	responseRenderer      map[string]core.Renderer
+	displayConfig         *syncsign.DisplayConfig
 }
 
 type emptyResponse struct {

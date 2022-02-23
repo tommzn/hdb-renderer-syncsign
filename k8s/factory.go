@@ -86,7 +86,7 @@ func (f *factory) newResponseRenderer(nodeId string) core.Renderer {
 
 func (f *factory) newIndoorClimateRenderer() core.Renderer {
 	if f.indoorClimateRenderer == nil {
-		renderer := syncsign.NewIndoorClimateRenderer(f.conf, f.logger, f.newIndoorClimateTemplate(), f.newIndoorClimateDataSource())
+		renderer := syncsign.NewIndoorClimateRenderer(f.conf, f.logger, f.newIndoorClimateTemplate(), f.newDataSource())
 		go renderer.ObserveDataSource(f.ctx)
 		f.indoorClimateRenderer = renderer
 	}
@@ -95,25 +95,21 @@ func (f *factory) newIndoorClimateRenderer() core.Renderer {
 
 func (f *factory) newBillingReportRenderer() core.Renderer {
 	if f.billingReportRenderer == nil {
-		renderer := syncsign.NewBillingReportRenderer(f.conf, f.logger, f.newBillingReportTemplate(), f.newBillingReportDataSource())
+		renderer := syncsign.NewBillingReportRenderer(f.conf, f.logger, f.newBillingReportTemplate(), f.newDataSource())
 		go renderer.ObserveDataSource(f.ctx)
 		f.billingReportRenderer = renderer
 	}
 	return f.billingReportRenderer
 }
 
-func (f *factory) newIndoorClimateDataSource() core.DataSource {
-	if f.indoorClimateDataSource == nil {
-		indoorClimateDataSource := datasource.New(f.conf, f.logger)
+func (f *factory) newDataSource() core.DataSource {
+	if f.dataSource == nil {
+		dataSource := datasource.New(f.conf, f.logger)
 		f.wg.Add(1)
-		go indoorClimateDataSource.Run(f.ctx, f.wg)
-		f.indoorClimateDataSource = indoorClimateDataSource
+		go dataSource.Run(f.ctx, f.wg)
+		f.dataSource = dataSource
 	}
-	return f.indoorClimateDataSource
-}
-
-func (f *factory) newBillingReportDataSource() core.DataSource {
-	return f.newIndoorClimateDataSource()
+	return f.dataSource
 }
 
 func (f *factory) indoorClimateDevices() []string {
