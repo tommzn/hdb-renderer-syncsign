@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	config "github.com/tommzn/go-config"
@@ -36,6 +37,7 @@ func loadConfig() config.Config {
 	if err != nil {
 		exitOnError(err)
 	}
+	fmt.Printf("Config: %+v\n", conf)
 	return conf
 }
 
