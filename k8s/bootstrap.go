@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	syslog "log"
 	"os"
 
 	config "github.com/tommzn/go-config"
@@ -24,10 +23,6 @@ func bootstrap(conf config.Config, ctx context.Context) (*core.Minion, error) {
 // loadConfig from config file.
 func loadConfig() config.Config {
 
-	if conf, err := config.NewFileConfigSource(nil).Load(); err == nil {
-		return conf
-	}
-
 	configSource, err := config.NewS3ConfigSourceFromEnv()
 	if err != nil {
 		exitOnError(err)
@@ -37,7 +32,6 @@ func loadConfig() config.Config {
 	if err != nil {
 		exitOnError(err)
 	}
-	syslog.Printf("Config: %+v\n", conf)
 	return conf
 }
 
