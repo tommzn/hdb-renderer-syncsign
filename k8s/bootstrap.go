@@ -12,10 +12,11 @@ import (
 
 func bootstrap(conf config.Config, ctx context.Context) (*core.Minion, error) {
 
+	secretsManager := newSecretsManager()
 	if conf == nil {
 		conf = loadConfig()
 	}
-	logger := newLogger(conf, newSecretsManager(), ctx)
+	logger := newLogger(conf, secretsManager, ctx)
 	server := newServer(conf, logger, newFactory(conf, logger, ctx))
 	return core.NewMinion(server), nil
 }
