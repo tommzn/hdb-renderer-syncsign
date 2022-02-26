@@ -78,6 +78,7 @@ func (renderer *BillingReportRenderer) ObserveDataSource(ctx context.Context) {
 				return
 			}
 			renderer.logger.Debug("Event received from datasource.")
+			renderer.logger.Debug(message)
 			renderer.processEvent(message)
 		case <-ctx.Done():
 			renderer.logger.Info("Camceled, stop observing.")
