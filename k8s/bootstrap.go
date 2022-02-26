@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	syslog "log"
 	"os"
 
 	config "github.com/tommzn/go-config"
@@ -37,7 +37,7 @@ func loadConfig() config.Config {
 	if err != nil {
 		exitOnError(err)
 	}
-	fmt.Printf("Config: %+v\n", conf)
+	syslog.Printf("Config: %+v\n", conf)
 	return conf
 }
 
