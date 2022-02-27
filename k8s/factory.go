@@ -108,6 +108,8 @@ func (f *factory) newDataSource() core.DataSource {
 		f.wg.Add(1)
 		go dataSource.Run(f.ctx, f.wg)
 		f.dataSource = dataSource
+		f.logger.Debug("Datasource created & starrted!")
+		f.logger.Flush()
 	}
 	return f.dataSource
 }

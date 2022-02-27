@@ -227,6 +227,8 @@ github.com/tommzn/hdb-message-client v1.1.1 h1:fx39KySM+5nuCL6bI8bzlraHxEkloYvDe
 github.com/tommzn/hdb-message-client v1.1.1/go.mod h1:FAB9jLM7gIUh/NsRAOa5Llo3GijYwrfFI4XC9UfZLsI=
 github.com/tommzn/hdb-message-client v1.1.2 h1:Q0u6Ut5JoMfyN+nFW9r2PY3bQOreSkkeWS2n1UdhgNg=
 github.com/tommzn/hdb-message-client v1.1.2/go.mod h1:FAB9jLM7gIUh/NsRAOa5Llo3GijYwrfFI4XC9UfZLsI=
+github.com/tommzn/hdb-message-client v1.1.3 h1:JjhoB9OrE7kWGmeyIyN2hm2qM/Z66ASXLTTdGXLzYFw=
+github.com/tommzn/hdb-message-client v1.1.3/go.mod h1:FAB9jLM7gIUh/NsRAOa5Llo3GijYwrfFI4XC9UfZLsI=
 github.com/tommzn/hdb-renderer-core v1.1.3 h1:8oLDzmmy/Eimp517M2S+dcWVVvZmahBDsGOjpgMHQEc=
 github.com/tommzn/hdb-renderer-core v1.1.3/go.mod h1:AoDVgPymlmwMeOjvCECOnk/0QG7fpYga2ECUJPf+hvA=
 github.com/tommzn/hdb-renderer-core v1.1.4 h1:mDrKELFFWh+qrFpkNQkoKql/rJwfh59Vx5HeiuIBcgo=

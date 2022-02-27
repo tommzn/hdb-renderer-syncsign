@@ -44,6 +44,7 @@ func (server *webServer) Run(ctx context.Context, waitGroup *sync.WaitGroup) err
 	router.HandleFunc("/health", server.handleHealthCheckRequest).Methods("GET")
 
 	server.logger.Infof("Listen [%s]", server.port)
+	server.logger.Flush()
 	server.httpServer = &http.Server{Addr: ":" + server.port, Handler: router}
 
 	endChan := make(chan error, 1)
