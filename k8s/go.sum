@@ -215,6 +215,8 @@ github.com/tommzn/go-log v1.1.0/go.mod h1:xB+EJtRRPcR+4oeenhSvKKeNq4Mqr2GjHEz1lJ
 github.com/tommzn/go-secrets v1.0.0/go.mod h1:ZCiO/36WGUEgk5K7+S3U/JKIp4ghe5OA2fkckVN32/8=
 github.com/tommzn/go-secrets v1.0.2 h1:+oDkPga3IbHxfQ+A9v03CsH4P5nU0lIwB8sBUodYbYo=
 github.com/tommzn/go-secrets v1.0.2/go.mod h1:ZCiO/36WGUEgk5K7+S3U/JKIp4ghe5OA2fkckVN32/8=
+github.com/tommzn/go-secrets v1.1.0 h1:72Uy5LIroVMZC+aSJ1yvd0ngiFU2M3WxErT/oHqq2mU=
+github.com/tommzn/go-secrets v1.1.0/go.mod h1:ZCiO/36WGUEgk5K7+S3U/JKIp4ghe5OA2fkckVN32/8=
 github.com/tommzn/go-utils v1.0.2 h1:OnUdCJC46ogBDNnt+zwG1bN/RyoYoeNWBvPTbBITIGo=
 github.com/tommzn/go-utils v1.0.2/go.mod h1:TaQQLOtzHNmRx+/WUHgyNYvsqUX1N0JJEePC8Pye0Ow=
 github.com/tommzn/hdb-core v1.0.1 h1:D+1/2CN+A7zt4cJ11JOGwSlEDa8OTDHfZzzFq0MzQY4=
