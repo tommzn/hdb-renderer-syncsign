@@ -8,10 +8,10 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tommzn/go-config v1.0.5
 	github.com/tommzn/go-log v1.1.0
-	github.com/tommzn/go-secrets v1.1.0
+	github.com/tommzn/go-secrets v1.1.1
 	github.com/tommzn/hdb-core v1.0.1
 	github.com/tommzn/hdb-events-go v1.0.8
-	github.com/tommzn/hdb-message-client v1.1.7 // indirect
+	github.com/tommzn/hdb-message-client v1.1.8
 	github.com/tommzn/hdb-renderer-core v1.1.4
 	github.com/tommzn/hdb-renderer-syncsign v1.2.4
 	google.golang.org/protobuf v1.27.1
