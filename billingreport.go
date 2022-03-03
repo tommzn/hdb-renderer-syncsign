@@ -94,17 +94,28 @@ func (renderer *BillingReportRenderer) processEvent(message proto.Message) {
 		renderer.logger.Debugf("Receive new billing report for %s", billingReport.BillingPeriod)
 		renderer.calculateBillingReport(billingReport)
 	}
-	if exchangeRate, ok := message.(*events.ExchangeRate); ok {
+	if exchangeRates, ok := message.(*events.ExchangeRates); ok {
+		renderer.assignExchangeRates(exchangeRates)
+	}
+}
+
+// AssignExchangeRates will save passed exchange rate if it's relevant for billing report calculations.
+func (renderer *BillingReportRenderer) assignExchangeRates(exchangeRates *events.ExchangeRates) {
+
+	for _, exchangeRate := range exchangeRates.Rates {
 		renderer.logger.Debugf("Receive new exchange rate %s/%s", exchangeRate.FromCurrency, exchangeRate.ToCurrency)
 		renderer.assignExchangeRate(exchangeRate)
 	}
 }
 
-// AssignExchangeRate will save passed exchange reate locally if there's no exchangre assigned yet or
+// AssignExchangeRate will save passed exchange rate locally if there's no exchangre assigned yet or
 // if passed exchange rate is newer.
 func (renderer *BillingReportRenderer) assignExchangeRate(exchangeRate *events.ExchangeRate) {
 
 	exchangeRateKey := keyForExchangeRate(renderer.reportCurrency, renderer.displayCurrency)
+	if exchangeRateKey != keyForExchangeRate(exchangeRate.FromCurrency, exchangeRate.ToCurrency) {
+		return
+	}
 	if currentExchangeRate, ok := renderer.exchangeRates[exchangeRateKey]; ok &&
 		exchangeRate.Timestamp.AsTime().Before(currentExchangeRate.Timestamp.AsTime()) {
 		return

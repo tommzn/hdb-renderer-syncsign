@@ -103,3 +103,27 @@ type BillingReportRenderer struct {
 	billingReport   *billingReportData
 	exchangeRates   map[string]*events.ExchangeRate
 }
+
+type WeatherRenderer struct {
+	currentWeatherTemplate core.Template
+	forecastTemplate       core.Template
+	anchor                 core.Point
+	logger                 log.Logger
+	datasource             core.DataSource
+	dataSourceChan         <-chan proto.Message
+	weatherData            *events.WeatherData
+	weatherIconMap         WeatherIconMap
+}
+
+type weatherData struct {
+	Anchor       core.Point
+	WeatherIcon  string
+	Temperature  string
+	WindSpeed    string
+	Day          string
+	DisplayIndex int
+}
+
+type WeatherIconMap struct {
+	icons map[string]string
+}
