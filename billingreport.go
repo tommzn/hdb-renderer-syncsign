@@ -9,6 +9,7 @@ import (
 	log "github.com/tommzn/go-log"
 	hdbcore "github.com/tommzn/hdb-core"
 	events "github.com/tommzn/hdb-events-go"
+	dsclient "github.com/tommzn/hdb-message-client"
 	core "github.com/tommzn/hdb-renderer-core"
 )
 
@@ -32,12 +33,23 @@ func NewBillingReportRenderer(conf config.Config, logger log.Logger, template co
 // Content generates items for billing reports received from used datasource.
 func (renderer *BillingReportRenderer) Content() (string, error) {
 
+	renderer.logDatasource()
+
 	if renderer.billingReport == nil {
 		if err := renderer.fetchEvents(); err != nil {
 			return "", errors.New("No billing report available.")
 		}
 	}
 	return renderer.template.RenderWith(renderer.billingReport)
+}
+
+func (renderer *BillingReportRenderer) logDatasource() {
+	if ds, ok := renderer.datasource.(*dsclient.MessageClient); ok {
+		renderer.logger.Debug(ds.String())
+	} else {
+		renderer.logger.Debug("Unable to log datasource.")
+	}
+
 }
 
 // FetchEvents will retrieve latest billing report from used datasource and process it
