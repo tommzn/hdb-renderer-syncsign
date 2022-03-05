@@ -34,6 +34,14 @@ func loggerForTest() log.Logger {
 	return log.NewLogger(log.Debug, nil, nil)
 }
 
+func weatherRendererForTest(configFile string) *WeatherRenderer {
+	datasource := newDataSourceMock(false, false, fixturesForWeatherRenderer())
+	conf := loadConfigForTest(config.AsStringPtr(configFile))
+	currentWeatherTemplate := templateQithFileForTest("templates/weather_current.json")
+	forecastTemplate := templateQithFileForTest("templates/weather_forecast.json")
+	return NewWeatherRenderer(conf, loggerForTest(), currentWeatherTemplate, forecastTemplate, datasource)
+}
+
 func billingReportRendererForTest(configFile string) *BillingReportRenderer {
 	datasource := newDataSourceMock(false, false, fixturesForBillingReportRenderer())
 	conf := loadConfigForTest(config.AsStringPtr(configFile))
@@ -121,11 +129,15 @@ func fixturesForBillingReportRenderer() map[hdbcore.DataSource][]proto.Message {
 
 func exchangeRateForTest() []proto.Message {
 	return []proto.Message{
-		&events.ExchangeRate{
-			FromCurrency: "USD",
-			ToCurrency:   "EUR",
-			Rate:         0.8345,
-			Timestamp:    timestamppb.New(time.Now()),
+		&events.ExchangeRates{
+			Rates: []*events.ExchangeRate{
+				&events.ExchangeRate{
+					FromCurrency: "USD",
+					ToCurrency:   "EUR",
+					Rate:         0.8345,
+					Timestamp:    timestamppb.New(time.Now()),
+				},
+			},
 		},
 	}
 }
@@ -142,6 +154,91 @@ func billingReportForTest() []proto.Message {
 			BillingPeriod: "Jan 2022",
 			BillingAmount: billingAmount,
 			TaxAmount:     taxAmount,
+		},
+	}
+}
+
+func fixturesForWeatherRenderer() map[hdbcore.DataSource][]proto.Message {
+	events := make(map[hdbcore.DataSource][]proto.Message)
+	events[hdbcore.DATASOURCE_WEATHER] = weatherDataForTest()
+	return events
+}
+
+func weatherDataForTest() []proto.Message {
+	return []proto.Message{
+		&events.WeatherData{
+			Location: &events.Location{
+				Longitude: 1.0,
+				Latitude:  1.0,
+			},
+			Units: "celsius",
+			Current: &events.CurrentWeather{
+				Timestamp:   timestamppb.New(time.Now()),
+				Temperature: 21.7,
+				WindSpeed:   45.7,
+				Weather: &events.WeatherDetails{
+					ConditionId: 1000,
+					Group:       "sunny",
+					Description: "Sunny",
+					Icon:        "01d",
+				},
+			},
+			Forecast: []*events.ForecastWeather{
+				&events.ForecastWeather{
+					Timestamp: timestamppb.New(time.Now().Add(1 * 24 * time.Hour)),
+					Temperatures: &events.ForecastTemperatures{
+						Morning: 10.1,
+						Day:     17.5,
+						Evening: 16.4,
+						Night:   12.4,
+						DayMin:  14.5,
+						DayMax:  21.4,
+					},
+					WindSpeed: 20.5,
+					Weather: &events.WeatherDetails{
+						ConditionId: 1000,
+						Group:       "sunny",
+						Description: "Sunny",
+						Icon:        "01d",
+					},
+				},
+				&events.ForecastWeather{
+					Timestamp: timestamppb.New(time.Now().Add(2 * 24 * time.Hour)),
+					Temperatures: &events.ForecastTemperatures{
+						Morning: 10.1,
+						Day:     17.5,
+						Evening: 16.4,
+						Night:   12.4,
+						DayMin:  14.5,
+						DayMax:  21.4,
+					},
+					WindSpeed: 20.5,
+					Weather: &events.WeatherDetails{
+						ConditionId: 1000,
+						Group:       "sunny",
+						Description: "Sunny",
+						Icon:        "01d",
+					},
+				},
+				&events.ForecastWeather{
+					Timestamp: timestamppb.New(time.Now().Add(3 * 24 * time.Hour)),
+					Temperatures: &events.ForecastTemperatures{
+						Morning: 10.1,
+						Day:     17.5,
+						Evening: 16.4,
+						Night:   12.4,
+						DayMin:  14.5,
+						DayMax:  21.4,
+					},
+					WindSpeed: 20.5,
+					Weather: &events.WeatherDetails{
+						ConditionId: 1000,
+						Group:       "sunny",
+						Description: "Sunny",
+						Icon:        "01d",
+					},
+				},
+			},
 		},
 	}
 }
