@@ -34,6 +34,7 @@ func loggerForTest() log.Logger {
 	return log.NewLogger(log.Debug, nil, nil)
 }
 
+/*
 func weatherRendererForTest(configFile string) *WeatherRenderer {
 	datasource := newDataSourceMock(false, false, fixturesForWeatherRenderer())
 	conf := loadConfigForTest(config.AsStringPtr(configFile))
@@ -41,7 +42,7 @@ func weatherRendererForTest(configFile string) *WeatherRenderer {
 	forecastTemplate := templateQithFileForTest("templates/weather_forecast.json")
 	return NewWeatherRenderer(conf, loggerForTest(), currentWeatherTemplate, forecastTemplate, datasource)
 }
-
+*/
 func billingReportRendererForTest(configFile string) *BillingReportRenderer {
 	datasource := newDataSourceMock(false, false, fixturesForBillingReportRenderer())
 	conf := loadConfigForTest(config.AsStringPtr(configFile))
