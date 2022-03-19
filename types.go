@@ -17,6 +17,7 @@ type IndoorClimateRenderer struct {
 	roomClimate    map[string]indoorCliemate
 	roomCfg        roomConfig
 	dataSourceChan <-chan proto.Message
+	timestapMgr    core.TimestampManager
 }
 
 type indoorCliemate struct {

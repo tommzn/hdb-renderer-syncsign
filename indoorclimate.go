@@ -28,6 +28,7 @@ func NewIndoorClimateRenderer(conf config.Config, logger log.Logger, template co
 		logger:       logger,
 		roomClimate:  make(map[string]indoorCliemate),
 		roomCfg:      roomCfg,
+		timestapMgr:  core.NewTimestampManager(),
 	}
 }
 
@@ -112,22 +113,33 @@ func (renderer *IndoorClimateRenderer) initIndoorClimateData() {
 // addAsIndoorClimateData will try to add passed message to local indoor climate data.
 func (renderer *IndoorClimateRenderer) addAsIndoorClimateData(message proto.Message) {
 
-	if indoorClimate, ok := message.(*events.IndoorClimate); ok {
-		renderer.logger.Debugf("Receive new indoor climate data, %s, %s", indoorClimate.Type, indoorClimate.Value)
-		if roomId, ok := renderer.roomCfg.deviceMap[indoorClimate.DeviceId]; ok {
-			roomClimate := renderer.getRoomClimate(roomId)
-			switch indoorClimate.Type {
-			case events.MeasurementType_TEMPERATURE:
-				roomClimate.Temperature = formatTemperature(indoorClimate.Value)
-			case events.MeasurementType_HUMIDITY:
-				roomClimate.Humidity = formatHumidity(indoorClimate.Value)
-			case events.MeasurementType_BATTERY:
-				roomClimate.BatteryIcon = batteryIcon(indoorClimate.Value)
-				roomClimate.BatteryIconColor = batteryIconColor(indoorClimate.Value)
-			}
-			renderer.roomClimate[roomId] = roomClimate
-		}
+	indoorClimate, ok := message.(*events.IndoorClimate)
+	if !ok {
+		return
 	}
+
+	roomId, ok := renderer.roomCfg.deviceMap[indoorClimate.DeviceId]
+	if !ok {
+		return
+	}
+
+	if !renderer.timestapMgr.IsLatestWithSuffix(message, roomId) {
+		return
+	}
+
+	renderer.logger.Debugf("Receive new indoor climate data, %s, %s", indoorClimate.Type, indoorClimate.Value)
+	roomClimate := renderer.getRoomClimate(roomId)
+	switch indoorClimate.Type {
+	case events.MeasurementType_TEMPERATURE:
+		roomClimate.Temperature = formatTemperature(indoorClimate.Value)
+	case events.MeasurementType_HUMIDITY:
+		roomClimate.Humidity = formatHumidity(indoorClimate.Value)
+	case events.MeasurementType_BATTERY:
+		roomClimate.BatteryIcon = batteryIcon(indoorClimate.Value)
+		roomClimate.BatteryIconColor = batteryIconColor(indoorClimate.Value)
+	}
+	renderer.roomClimate[roomId] = roomClimate
+	renderer.timestapMgr.AddWithSuffix(message, roomId)
 }
 
 // getRoomClimate will have a look if there's already climate data for given room.

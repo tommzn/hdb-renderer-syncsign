@@ -17,7 +17,7 @@ require (
 	github.com/tommzn/hdb-core v1.0.1
 	github.com/tommzn/hdb-events-go v1.0.8
 	github.com/tommzn/hdb-message-client v1.1.12 // indirect
-	github.com/tommzn/hdb-renderer-core v1.1.4
+	github.com/tommzn/hdb-renderer-core v1.1.6
 	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/ini.v1 v1.66.4 // indirect
