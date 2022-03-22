@@ -103,15 +103,10 @@ func (f *factory) newBillingReportRenderer() core.Renderer {
 }
 
 func (f *factory) newDataSource() core.DataSource {
-	if f.dataSource == nil {
-		dataSource := datasource.New(f.conf, f.logger)
-		f.wg.Add(1)
-		go dataSource.Run(f.ctx, f.wg)
-		f.dataSource = dataSource
-		f.logger.Debug("Datasource created & starrted!")
-		f.logger.Flush()
-	}
-	return f.dataSource
+	dataSource := datasource.New(f.conf, f.logger)
+	f.wg.Add(1)
+	go dataSource.Run(f.ctx, f.wg)
+	return dataSource
 }
 
 func (f *factory) indoorClimateDevices() []string {

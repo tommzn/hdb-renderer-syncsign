@@ -25,7 +25,6 @@ type factory struct {
 	logger                log.Logger
 	ctx                   context.Context
 	wg                    *sync.WaitGroup
-	dataSource            core.DataSource
 	errorTemplate         core.Template
 	responseTemplate      core.Template
 	indoorClimateTemplate core.Template
