@@ -62,8 +62,6 @@ func (renderer *WeatherRenderer) ObserveDataSource(ctx context.Context) {
 				renderer.logger.Error("Error at reading datasource channel. Stop observing!")
 				return
 			}
-			renderer.logger.Debug("Event received from datasource.")
-			renderer.logger.Debug(message)
 			renderer.processEvent(message)
 		case <-ctx.Done():
 			renderer.logger.Info("Camceled, stop observing.")
