@@ -1,0 +1,38 @@
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Temperature }}°",
+        "id": "hdb.weather.current.temp",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_32",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ .Anchor.X }},
+            "y": {{ .Anchor.Y }},
+            "w": 72,
+            "h": 44
+        },
+        "offset": {
+            "x": -10,
+            "y": 0
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .WeatherIcon }}",
+        "id": "hdb.billingreport.icon",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "ICON_WEATHER",
+        "textAlign": "LEFT",
+        "block": {
+            "x": {{ add .Anchor.X 75 }},
+            "y": {{ .Anchor.Y }},
+            "w": 50,
+            "h": 50
+        }
+    }
+},

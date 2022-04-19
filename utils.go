@@ -155,3 +155,35 @@ func keyForExchangeRate(fromCurrency, toCurrency string) string {
 func formatForCurrency(amount billingReportAmount) string {
 	return fmt.Sprintf("%.2f %s", amount.Amount, amount.Currency)
 }
+
+func newIconMap() WeatherIconMap {
+
+	iconMap := WeatherIconMap{icons: make(map[string]string)}
+	iconMap.icons["01d"] = "\uf00d" // Clear sky, day
+	iconMap.icons["01n"] = "\uf02e" // Clear sky, night
+	iconMap.icons["02d"] = "\uf002" // Few clouds, day
+	iconMap.icons["02n"] = "\uf086" // Few clouds, night
+	iconMap.icons["03d"] = "\uf013" // Scattered clouds, day
+	iconMap.icons["03n"] = "\uf013" // Scattered clouds, night
+	iconMap.icons["04d"] = "\uf07d" // Broken clouds, day
+	iconMap.icons["04n"] = "\uf07e" // Broken clouds, night
+	iconMap.icons["09d"] = "\uf0b2" // Shower rain, day
+	iconMap.icons["09n"] = "\uf0b4" // Shower rain, night
+	iconMap.icons["10d"] = "\uf008" // Rain, day
+	iconMap.icons["10n"] = "\uf028" // Rain, night
+	iconMap.icons["11d"] = "\uf01e" // Thunderstorm, day
+	iconMap.icons["11n"] = "\uf01e" // Thunderstorm, night
+	iconMap.icons["13d"] = "\uf01b" // Snow, day
+	iconMap.icons["13n"] = "\uf01b" // Snow, night
+	iconMap.icons["50d"] = "\uf041" // Mist, day
+	iconMap.icons["50n"] = "\uf041" // Mist, night
+	return iconMap
+}
+
+func (iconMap WeatherIconMap) toWeatherIcon(iconId string) string {
+	if icon, ok := iconMap.icons[iconId]; ok {
+		return icon
+	} else {
+		return "\uf008"
+	}
+}

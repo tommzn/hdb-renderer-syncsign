@@ -159,6 +159,14 @@ func billingReportForTest() []proto.Message {
 	}
 }
 
+func weatherRendererForTest(configFile string) *WeatherRenderer {
+	datasource := newDataSourceMock(false, false, fixturesForWeatherRenderer())
+	conf := loadConfigForTest(config.AsStringPtr(configFile))
+	currentWeatherTemplate := templateQithFileForTest("templates/weather_current.json")
+	forecastWeatherTemplate := templateQithFileForTest("templates/weather_forecast.json")
+	return NewWeatherRenderer(conf, loggerForTest(), currentWeatherTemplate, forecastWeatherTemplate, datasource)
+}
+
 func fixturesForWeatherRenderer() map[hdbcore.DataSource][]proto.Message {
 	events := make(map[hdbcore.DataSource][]proto.Message)
 	events[hdbcore.DATASOURCE_WEATHER] = weatherDataForTest()
