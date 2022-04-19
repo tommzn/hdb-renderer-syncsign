@@ -56,6 +56,20 @@ func (f *factory) newBillingReportTemplate() core.Template {
 	return f.billingReportTemplate
 }
 
+func (f *factory) newCurrentWeatherTemplate() core.Template {
+	if f.billingReportTemplate == nil {
+		f.billingReportTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.current")
+	}
+	return f.billingReportTemplate
+}
+
+func (f *factory) newForeCastWeatherTemplate() core.Template {
+	if f.billingReportTemplate == nil {
+		f.billingReportTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.forecast")
+	}
+	return f.billingReportTemplate
+}
+
 func (f *factory) newTimestampRenderer() core.Renderer {
 	return syncsign.NewTimestampRenderer(f.newTimestampTemplate())
 }
@@ -77,6 +91,7 @@ func (f *factory) newResponseRenderer(nodeId string) core.Renderer {
 		itemRenderer := []core.Renderer{
 			f.newIndoorClimateRenderer(),
 			f.newBillingReportRenderer(),
+			f.newWeatherRenderer(),
 			f.newTimestampRenderer(),
 		}
 		f.responseRenderer[nodeId] = syncsign.NewResponseRenderer(f.newResponseRendererTemplate(), nodeId, itemRenderer)
@@ -100,6 +115,15 @@ func (f *factory) newBillingReportRenderer() core.Renderer {
 		f.billingReportRenderer = renderer
 	}
 	return f.billingReportRenderer
+}
+
+func (f *factory) newWeatherRenderer() core.Renderer {
+	if f.weatherRenderer == nil {
+		renderer := syncsign.NewWeatherRenderer(f.conf, f.logger, f.newCurrentWeatherTemplate(), f.newForeCastWeatherTemplate(), f.newDataSource())
+		go renderer.ObserveDataSource(f.ctx)
+		f.weatherRenderer = renderer
+	}
+	return f.weatherRenderer
 }
 
 func (f *factory) newDataSource() core.DataSource {

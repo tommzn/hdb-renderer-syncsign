@@ -32,6 +32,7 @@ type factory struct {
 	timestampTemplate     core.Template
 	indoorClimateRenderer core.Renderer
 	billingReportRenderer core.Renderer
+	weatherRenderer       core.Renderer
 	responseRenderer      map[string]core.Renderer
 	displayConfig         *syncsign.DisplayConfig
 }
