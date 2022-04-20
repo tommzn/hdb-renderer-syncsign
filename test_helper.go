@@ -268,7 +268,7 @@ func replaceUUID(content, newId string) string {
 }
 
 func replaceTimeStamp(content, newTimeStamp string) string {
-	expression := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3}")
+	expression := regexp.MustCompile("[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} [A-Z]{3,4}")
 	matches := expression.FindStringSubmatch(content)
 	for _, match := range matches {
 		content = strings.ReplaceAll(content, match, newTimeStamp)
