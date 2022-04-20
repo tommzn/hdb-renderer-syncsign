@@ -6,13 +6,34 @@
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "ICON_FA_BRANDS",
-        "textAlign": "RIGHT",
+        "textAlign": "LEFT",
         "block": {
             "x": {{ .Anchor.X }},
             "y": {{ .Anchor.Y }},
-            "w": 72,
+            "w": 50,
             "h": 44
         }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Period }}",
+        "id": "hdb.billingreport.period",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "DDIN_16",
+        "textAlign": "LEFT",
+        "block": {
+            "x": {{ add .Anchor.X 55 }},
+            "y": {{ .Anchor.Y }},
+            "w": 95,
+            "h": 20
+        },
+	"offset": {
+	    "x": 5,
+	    "y": 0
+	}
     }
 },
 {
@@ -22,30 +43,17 @@
         "id": "hdb.billingreport.amount",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
-        "font": "KAUSHAN_SCRIPT_20",
-        "textAlign": "RIGHT",
+        "font": "DDIN_16",
+        "textAlign": "LEFT",
         "block": {
-            "x": {{ add .Anchor.X 75 }},
-            "y": {{ .Anchor.Y }},
-            "w": 72,
-            "h": 44
-        }
-    }
-},
-{
-    "type": "TEXT",
-    "data": {
-        "text": "{{ .Period }}°",
-        "id": "hdb.billingreport.period",
-        "textColor": "BLACK",
-        "backgroundColor": "WHITE",
-        "font": "KAUSHAN_SCRIPT_20",
-        "textAlign": "RIGHT",
-        "block": {
-            "x": {{ add .Anchor.X 75 }},
-            "y": {{ add .Anchor.Y 45 }},
-            "w": 72,
-            "h": 44
-        }
+            "x": {{ add .Anchor.X 55 }},
+            "y": {{ add .Anchor.Y 20 }},
+            "w": 95,
+            "h": 20
+        },
+	"offset": {
+	    "x": 5,
+	    "y": 0
+	}
     }
 }

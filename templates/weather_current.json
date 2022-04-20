@@ -23,7 +23,7 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .WeatherIcon }}",
-        "id": "hdb.billingreport.icon",
+        "id": "hdb.weather.current.icon",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "ICON_WEATHER",
@@ -31,8 +31,29 @@
         "block": {
             "x": {{ add .Anchor.X 75 }},
             "y": {{ .Anchor.Y }},
-            "w": 50,
-            "h": 50
+            "w": 72,
+            "h": 58
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .WindSpeed }} km/h",
+        "id": "hdb.weather.current.wind",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ add .Anchor.X 120 }},
+            "y": {{ add .Anchor.Y 48 }},
+            "w": 90,
+            "h": 24
+        },
+        "offset": {
+            "x": -10,
+            "y": 0
         }
     }
 },
