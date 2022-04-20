@@ -21,5 +21,5 @@ func (suite *TimestampTestSuite) TestGenerateContent() {
 	content, err := renderer.Content()
 	suite.Nil(err)
 	content = replaceTimeStamp(content, "TimeStamp-1")
-	assertTemplateHash(suite.Assert(), content, "62e2a622de3f26945696c8649154cbf272a01327")
+	assertTemplateHash(suite.Assert(), content, "81875067021a4793de2d4865aace3be058f57c28")
 }

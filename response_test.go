@@ -31,7 +31,7 @@ func (suite *ResponseTestSuite) TestGenerateContent() {
 	// Replace renderer id and timestamp with default value for assertion
 	content = replaceUUID(content, "RenderId-1")
 	content = replaceTimeStamp(content, "TimeStamp-1")
-	assertTemplateHash(suite.Assert(), content, "03729f689b446819bb1ef11ca42517e87bcf5cf3")
+	assertTemplateHash(suite.Assert(), content, "b38fe380db159d013db97d4b601609521aad9bfd")
 }
 
 func (suite *ResponseTestSuite) TestGenerateContentWithoutItemRenderer() {

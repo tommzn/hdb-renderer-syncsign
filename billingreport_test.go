@@ -23,7 +23,7 @@ func (suite *BillingReportTestSuite) TestGenerateContent() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "972a6ed1c5a17db9ab6d7eee9cbc3c932f1a49d0")
+	assertTemplateHash(suite.Assert(), content, "aeca36aff36351eba197fb55925e5393de9e59cb")
 }
 
 func (suite *BillingReportTestSuite) TestWithoutCurrencyConversion() {
@@ -32,7 +32,7 @@ func (suite *BillingReportTestSuite) TestWithoutCurrencyConversion() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "8dc3ed0649e9c1e224986e4436040be5d2dddd89")
+	assertTemplateHash(suite.Assert(), content, "2455cdb89bfbf751c2b49b2a8365ceb78ffe39d8")
 }
 
 func (suite *BillingReportTestSuite) TestGenerateContentByObservingDataSource() {
@@ -50,7 +50,7 @@ func (suite *BillingReportTestSuite) TestGenerateContentByObservingDataSource() 
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "972a6ed1c5a17db9ab6d7eee9cbc3c932f1a49d0")
+	assertTemplateHash(suite.Assert(), content, "aeca36aff36351eba197fb55925e5393de9e59cb")
 
 	cancelFunc()
 	select {
