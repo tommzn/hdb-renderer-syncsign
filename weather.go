@@ -84,7 +84,7 @@ func (renderer *WeatherRenderer) currentWeatherData() weatherData {
 		Anchor:       renderer.anchor,
 		WeatherIcon:  renderer.weatherIconMap.toWeatherIcon(renderer.weatherData.Current.Weather.Icon),
 		Temperature:  fmt.Sprintf("%.1f", renderer.weatherData.Current.Temperature),
-		WindSpeed:    fmt.Sprintf("%.1f", renderer.weatherData.Current.WindSpeed),
+		WindSpeed:    fmt.Sprintf("%d", int(renderer.weatherData.Current.WindSpeed)),
 		Day:          renderer.weatherData.Current.Timestamp.AsTime().Format("Monday"),
 		DisplayIndex: 0,
 	}
