@@ -3,6 +3,7 @@ package syncsign
 import (
 	"context"
 	"sort"
+	"strings"
 
 	"github.com/golang/protobuf/proto"
 	config "github.com/tommzn/go-config"
@@ -118,7 +119,8 @@ func (renderer *IndoorClimateRenderer) addAsIndoorClimateData(message proto.Mess
 		return
 	}
 
-	roomId, ok := renderer.roomCfg.deviceMap[indoorClimate.DeviceId]
+	deviceId := strings.ToUpper(indoorClimate.DeviceId)
+	roomId, ok := renderer.roomCfg.deviceMap[deviceId]
 	if !ok {
 		return
 	}

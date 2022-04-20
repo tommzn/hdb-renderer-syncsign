@@ -77,8 +77,9 @@ func configForRooms(conf config.Config, configKey string) roomConfig {
 	devices := conf.GetAsSliceOfMaps(configKey + ".devices")
 	for _, device := range devices {
 		if id, ok := device["id"]; ok {
+			deviceId := strings.ToUpper(id)
 			if roomId, ok1 := device["roomId"]; ok1 {
-				roomsCfg.deviceMap[id] = roomId
+				roomsCfg.deviceMap[deviceId] = roomId
 			}
 		}
 	}
