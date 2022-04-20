@@ -57,17 +57,17 @@ func (f *factory) newBillingReportTemplate() core.Template {
 }
 
 func (f *factory) newCurrentWeatherTemplate() core.Template {
-	if f.billingReportTemplate == nil {
-		f.billingReportTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.current")
+	if f.currentWeatherTemplate == nil {
+		f.currentWeatherTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.current")
 	}
-	return f.billingReportTemplate
+	return f.currentWeatherTemplate
 }
 
 func (f *factory) newForeCastWeatherTemplate() core.Template {
-	if f.billingReportTemplate == nil {
-		f.billingReportTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.forecast")
+	if f.forecastWeatherTemplate == nil {
+		f.forecastWeatherTemplate = core.NewFileTemplateFromConfig(f.conf, "hdb.template_dir", "hdb.weather.template.forecast")
 	}
-	return f.billingReportTemplate
+	return f.forecastWeatherTemplate
 }
 
 func (f *factory) newTimestampRenderer() core.Renderer {
