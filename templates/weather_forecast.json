@@ -2,7 +2,7 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .WeatherIcon }}",
-        "id": "hdb.weather.forecase.icon.{{ .DisplayIndex }}",
+        "id": "hdb.weather.forecast.icon.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "ICON_WEATHER",
@@ -19,7 +19,7 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .Temperature }}°",
-        "id": "hdb.weather.forecase.temp.{{ .DisplayIndex }}",
+        "id": "hdb.weather.forecast.temp.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",
@@ -40,7 +40,7 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .WindSpeed }} km/h",
-        "id": "hdb.weather.forecase.wind.{{ .DisplayIndex }}",
+        "id": "hdb.weather.forecast.wind.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",
@@ -61,7 +61,7 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .Day }}",
-        "id": "hdb.weather.forecase.day.{{ .DisplayIndex }}",
+        "id": "hdb.weather.forecast.day.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",

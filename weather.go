@@ -16,8 +16,8 @@ import (
 func NewWeatherRenderer(conf config.Config, logger log.Logger, currentWeatherTemplate core.Template, forecastTemplate core.Template, datasource core.DataSource) *WeatherRenderer {
 
 	anchor := anchorFromConfig(conf, "hdb.weather.anchor")
-	currentWeatherSize := sizeFromConfig(conf, "hdb.current.size")
-	forecastWeatherSize := sizeFromConfig(conf, "hdb.forecast.size")
+	currentWeatherSize := sizeFromConfig(conf, "hdb.weather.current.size")
+	forecastWeatherSize := sizeFromConfig(conf, "hdb.weather.forecast.size")
 	return &WeatherRenderer{
 		currentWeatherTemplate: currentWeatherTemplate,
 		forecastTemplate:       forecastTemplate,
