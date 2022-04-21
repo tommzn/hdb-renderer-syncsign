@@ -109,6 +109,8 @@ type WeatherRenderer struct {
 	currentWeatherTemplate core.Template
 	forecastTemplate       core.Template
 	anchor                 core.Point
+	currentWeatherSize     core.Size
+	forecastWeatherSize    core.Size
 	logger                 log.Logger
 	datasource             core.DataSource
 	dataSourceChan         <-chan proto.Message
@@ -117,12 +119,13 @@ type WeatherRenderer struct {
 }
 
 type weatherData struct {
-	Anchor       core.Point
-	WeatherIcon  string
-	Temperature  string
-	WindSpeed    string
-	Day          string
-	DisplayIndex int
+	Anchor           core.Point
+	WeatherIcon      string
+	Temperature      string
+	NightTemperature string
+	WindSpeed        string
+	Day              string
+	DisplayIndex     int
 }
 
 type WeatherIconMap struct {

@@ -16,9 +16,13 @@ import (
 func NewWeatherRenderer(conf config.Config, logger log.Logger, currentWeatherTemplate core.Template, forecastTemplate core.Template, datasource core.DataSource) *WeatherRenderer {
 
 	anchor := anchorFromConfig(conf, "hdb.weather.anchor")
+	currentWeatherSize := sizeFromConfig(conf, "hdb.current.size")
+	forecastWeatherSize := sizeFromConfig(conf, "hdb.forecast.size")
 	return &WeatherRenderer{
 		currentWeatherTemplate: currentWeatherTemplate,
 		forecastTemplate:       forecastTemplate,
+		currentWeatherSize:     currentWeatherSize,
+		forecastWeatherSize:    forecastWeatherSize,
 		anchor:                 anchor,
 		logger:                 logger,
 		datasource:             datasource,
@@ -35,7 +39,21 @@ func (renderer *WeatherRenderer) Content() (string, error) {
 			return "", err
 		}
 	}
-	return renderer.currentWeatherTemplate.RenderWith(renderer.currentWeatherData())
+
+	content, err := renderer.currentWeatherTemplate.RenderWith(renderer.currentWeatherData())
+	if err != nil {
+		return content, err
+	}
+
+	forecastData := renderer.forecastWeatherData()
+	for _, forecast := range forecastData {
+		forecastContent, err := renderer.forecastTemplate.RenderWith(forecast)
+		if err != nil {
+			return content, err
+		}
+		content += forecastContent
+	}
+	return content, nil
 }
 
 // FetchEvents will retrieve latest weather data.
@@ -88,4 +106,26 @@ func (renderer *WeatherRenderer) currentWeatherData() weatherData {
 		Day:          renderer.weatherData.Current.Timestamp.AsTime().Format("Monday"),
 		DisplayIndex: 0,
 	}
+}
+
+func (renderer *WeatherRenderer) forecastWeatherData() []weatherData {
+
+	displayIndex := 0
+	anchor := renderer.anchor
+	anchor.Y += renderer.currentWeatherSize.Height
+	forecasts := []weatherData{}
+	for _, forecast := range renderer.weatherData.Forecast {
+		forecasts = append(forecasts, weatherData{
+			Anchor:           anchor,
+			WeatherIcon:      renderer.weatherIconMap.toWeatherIcon(forecast.Weather.Icon),
+			Temperature:      fmt.Sprintf("%.1f", forecast.Temperatures.Day),
+			NightTemperature: fmt.Sprintf("%.1f", forecast.Temperatures.Night),
+			WindSpeed:        fmt.Sprintf("%d", int(forecast.WindSpeed)),
+			Day:              forecast.Timestamp.AsTime().Format("Monday"),
+			DisplayIndex:     displayIndex,
+		})
+		displayIndex++
+		anchor.X += renderer.forecastWeatherSize.Width
+	}
+	return forecasts
 }
