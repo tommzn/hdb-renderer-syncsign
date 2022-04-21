@@ -513,6 +513,8 @@ github.com/tommzn/hdb-renderer-syncsign v1.2.9 h1:QGsYbOj33WFokcakpCeeJszxFfbtG/
 github.com/tommzn/hdb-renderer-syncsign v1.2.9/go.mod h1:kqkUCJaj8G2sJOKCWE7/wyH2Yl/v7IEVQKwyF5EYjN0=
 github.com/tommzn/hdb-renderer-syncsign v1.2.11 h1:ZZ7TACDDr+UWzXWdsq2hjsM0xS2wfB39vCr9nAsj64Q=
 github.com/tommzn/hdb-renderer-syncsign v1.2.11/go.mod h1:kqkUCJaj8G2sJOKCWE7/wyH2Yl/v7IEVQKwyF5EYjN0=
+github.com/tommzn/hdb-renderer-syncsign v1.2.12 h1:7CE7gudDyY+KEOcFZEPzR8Jb2fjC5PEfQLzGsXiQqYA=
+github.com/tommzn/hdb-renderer-syncsign v1.2.12/go.mod h1:kqkUCJaj8G2sJOKCWE7/wyH2Yl/v7IEVQKwyF5EYjN0=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
