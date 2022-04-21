@@ -111,6 +111,7 @@ type WeatherRenderer struct {
 	anchor                 core.Point
 	currentWeatherSize     core.Size
 	forecastWeatherSize    core.Size
+	forecastLimit          int
 	logger                 log.Logger
 	datasource             core.DataSource
 	dataSourceChan         <-chan proto.Message

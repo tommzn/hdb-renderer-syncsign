@@ -18,11 +18,13 @@ func NewWeatherRenderer(conf config.Config, logger log.Logger, currentWeatherTem
 	anchor := anchorFromConfig(conf, "hdb.weather.anchor")
 	currentWeatherSize := sizeFromConfig(conf, "hdb.weather.current.size")
 	forecastWeatherSize := sizeFromConfig(conf, "hdb.weather.forecast.size")
+	forecastLimit := conf.GetAsInt("hdb.weather.forecast.limit", config.AsIntPtr(6))
 	return &WeatherRenderer{
 		currentWeatherTemplate: currentWeatherTemplate,
 		forecastTemplate:       forecastTemplate,
 		currentWeatherSize:     currentWeatherSize,
 		forecastWeatherSize:    forecastWeatherSize,
+		forecastLimit:          *forecastLimit,
 		anchor:                 anchor,
 		logger:                 logger,
 		datasource:             datasource,
@@ -126,6 +128,9 @@ func (renderer *WeatherRenderer) forecastWeatherData() []weatherData {
 		})
 		displayIndex++
 		anchor.X += renderer.forecastWeatherSize.Width
+	}
+	if len(forecasts) > renderer.forecastLimit {
+		return forecasts[:renderer.forecastLimit]
 	}
 	return forecasts
 }
