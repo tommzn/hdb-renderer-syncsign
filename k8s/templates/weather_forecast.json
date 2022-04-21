@@ -1,0 +1,80 @@
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .WeatherIcon }}",
+        "id": "hdb.weather.forecast.icon.{{ .DisplayIndex }}",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "ICON_WEATHER",
+        "textAlign": "LEFT",
+        "block": {
+            "x": {{ .Anchor.X }},
+            "y": {{ .Anchor.Y }},
+            "w": 50,
+            "h": 50
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Temperature }}°",
+        "id": "hdb.weather.forecast.temp.{{ .DisplayIndex }}",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ add .Anchor.X 55 }},
+            "y": {{ .Anchor.Y }},
+            "w": 72,
+            "h": 44
+        },
+        "offset": {
+            "x": -10,
+            "y": 0
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .WindSpeed }} km/h",
+        "id": "hdb.weather.forecast.wind.{{ .DisplayIndex }}",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ add .Anchor.X 55 }},
+            "y": {{ add .Anchor.Y 50 }},
+            "w": 72,
+            "h": 44
+        },
+        "offset": {
+            "x": -10,
+            "y": 0
+        }
+    }
+},
+{
+    "type": "TEXT",
+    "data": {
+        "text": "{{ .Day }}",
+        "id": "hdb.weather.forecast.day.{{ .DisplayIndex }}",
+        "textColor": "BLACK",
+        "backgroundColor": "WHITE",
+        "font": "KAUSHAN_SCRIPT_20",
+        "textAlign": "RIGHT",
+        "block": {
+            "x": {{ .Anchor.X }},
+            "y": {{ add .Anchor.Y 100 }},
+            "w": 90,
+            "h": 24
+        },
+        "offset": {
+            "x": -10,
+            "y": 0
+        }
+    }
+},
