@@ -10,8 +10,8 @@
         "block": {
             "x": {{ .Anchor.X }},
             "y": {{ .Anchor.Y }},
-            "w": 50,
-            "h": 50
+            "w": 72,
+            "h": 58
         }
     }
 },
@@ -19,13 +19,13 @@
     "type": "TEXT",
     "data": {
         "text": "{{ .Temperature }}°",
-        "id": "hdb.weather.forecast.temp.{{ .DisplayIndex }}",
+        "id": "hdb.weather.forecast.temp.day.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",
         "textAlign": "RIGHT",
         "block": {
-            "x": {{ add .Anchor.X 55 }},
+            "x": {{ add .Anchor.X 75 }},
             "y": {{ .Anchor.Y }},
             "w": 72,
             "h": 44
@@ -39,15 +39,15 @@
 {
     "type": "TEXT",
     "data": {
-        "text": "{{ .WindSpeed }} km/h",
-        "id": "hdb.weather.forecast.wind.{{ .DisplayIndex }}",
+        "text": "{{ .NightTemperature }}°",
+        "id": "hdb.weather.forecast.temp.night.{{ .DisplayIndex }}",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",
         "textAlign": "RIGHT",
         "block": {
-            "x": {{ add .Anchor.X 55 }},
-            "y": {{ add .Anchor.Y 50 }},
+            "x": {{ add .Anchor.X 75 }},
+            "y": {{ add .Anchor.Y 45 }},
             "w": 72,
             "h": 44
         },

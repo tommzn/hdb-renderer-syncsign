@@ -101,12 +101,13 @@ func (renderer *WeatherRenderer) processEvent(message proto.Message) {
 
 func (renderer *WeatherRenderer) currentWeatherData() weatherData {
 	return weatherData{
-		Anchor:       renderer.anchor,
-		WeatherIcon:  renderer.weatherIconMap.toWeatherIcon(renderer.weatherData.Current.Weather.Icon),
-		Temperature:  fmt.Sprintf("%.1f", renderer.weatherData.Current.Temperature),
-		WindSpeed:    fmt.Sprintf("%d", int(renderer.weatherData.Current.WindSpeed)),
-		Day:          renderer.weatherData.Current.Timestamp.AsTime().Format("Monday"),
-		DisplayIndex: 0,
+		Anchor:        renderer.anchor,
+		WeatherIcon:   renderer.weatherIconMap.toWeatherIcon(renderer.weatherData.Current.Weather.Icon),
+		Temperature:   fmt.Sprintf("%.1f", renderer.weatherData.Current.Temperature),
+		WindSpeed:     fmt.Sprintf("%d", int(renderer.weatherData.Current.WindSpeed)),
+		WindDirection: degreesToDirection(renderer.weatherData.Current.WindDirection),
+		Day:           renderer.weatherData.Current.Timestamp.AsTime().Format("Monday"),
+		DisplayIndex:  0,
 	}
 }
 

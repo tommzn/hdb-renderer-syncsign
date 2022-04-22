@@ -125,6 +125,7 @@ type weatherData struct {
 	Temperature      string
 	NightTemperature string
 	WindSpeed        string
+	WindDirection    string
 	Day              string
 	DisplayIndex     int
 }

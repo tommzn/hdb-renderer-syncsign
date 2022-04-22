@@ -39,14 +39,14 @@
 {
     "type": "TEXT",
     "data": {
-        "text": "{{ .WindSpeed }} km/h",
+        "text": "{{ .WindSpeed }} km/h ({{ .WindDirection }})",
         "id": "hdb.weather.current.wind",
         "textColor": "BLACK",
         "backgroundColor": "WHITE",
         "font": "KAUSHAN_SCRIPT_20",
         "textAlign": "RIGHT",
         "block": {
-            "x": {{ add .Anchor.X 120 }},
+            "x": {{ add .Anchor.X 100 }},
             "y": {{ add .Anchor.Y 48 }},
             "w": 90,
             "h": 24

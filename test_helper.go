@@ -182,9 +182,10 @@ func weatherDataForTest() []proto.Message {
 			},
 			Units: "celsius",
 			Current: &events.CurrentWeather{
-				Timestamp:   timestamppb.New(time.Now()),
-				Temperature: 21.7,
-				WindSpeed:   45.7,
+				Timestamp:     timestamppb.New(time.Now()),
+				Temperature:   21.7,
+				WindSpeed:     45.7,
+				WindDirection: 340,
 				Weather: &events.WeatherDetails{
 					ConditionId: 1000,
 					Group:       "sunny",

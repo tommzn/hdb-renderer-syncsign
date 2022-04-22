@@ -90,7 +90,7 @@ func (suite *UtilsTestSuite) TestFormatValues() {
 	suite.Equal("xxx", formatHumidity("xxx"))
 }
 
-func (suite *UtilsTestSuite) TestFBatteryIcon() {
+func (suite *UtilsTestSuite) TestBatteryIcon() {
 
 	suite.Equal(COLOR_BLACK, batteryIconColor("100"))
 	suite.Equal(COLOR_BLACK, batteryIconColor("10"))
@@ -114,4 +114,20 @@ func (suite *UtilsTestSuite) TestFBatteryIcon() {
 	suite.Equal(BATTERY_LEVEL_1_4, batteryIcon("20"))
 	suite.Equal(BATTERY_LEVEL_1_4, batteryIcon("10"))
 	suite.Equal(BATTERY_LEVEL_0_4, batteryIcon("5"))
+}
+
+func (suite *UtilsTestSuite) TestConvertDegreesToDirection() {
+
+	suite.Equal("N", degreesToDirection(0))
+	suite.Equal("N", degreesToDirection(360))
+	suite.Equal("N", degreesToDirection(20))
+	suite.Equal("NE", degreesToDirection(30))
+	suite.Equal("E", degreesToDirection(87))
+	suite.Equal("SE", degreesToDirection(120))
+	suite.Equal("S", degreesToDirection(175))
+	suite.Equal("SW", degreesToDirection(220))
+	suite.Equal("W", degreesToDirection(271))
+	suite.Equal("NW", degreesToDirection(320))
+	suite.Equal("N", degreesToDirection(340))
+	suite.Equal("N/A", degreesToDirection(600))
 }

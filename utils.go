@@ -188,3 +188,29 @@ func (iconMap WeatherIconMap) toWeatherIcon(iconId string) string {
 		return "\uf008"
 	}
 }
+
+// DegreesToDirection converts meteorological direction to cardinal direction
+func degreesToDirection(degrees int64) string {
+	switch {
+	case degrees >= 0 && degrees <= 22:
+		return "N" // North
+	case degrees > 22 && degrees <= 57:
+		return "NE" // North East
+	case degrees > 57 && degrees <= 112:
+		return "E" // East
+	case degrees > 113 && degrees <= 147:
+		return "SE" // South East
+	case degrees > 157 && degrees <= 202:
+		return "S" // South
+	case degrees > 202 && degrees <= 247:
+		return "SW" // South West
+	case degrees > 257 && degrees <= 292:
+		return "W" // West
+	case degrees > 292 && degrees <= 337:
+		return "NW" // North West
+	case degrees > 337 && degrees <= 360:
+		return "N" // North
+	default:
+		return "N/A"
+	}
+}
