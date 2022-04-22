@@ -437,6 +437,8 @@ github.com/tommzn/hdb-core v1.0.1 h1:D+1/2CN+A7zt4cJ11JOGwSlEDa8OTDHfZzzFq0MzQY4
 github.com/tommzn/hdb-core v1.0.1/go.mod h1:06kIRFbE7WrOZev4jtySE4d2fEMOv4lzHwg/n27vabk=
 github.com/tommzn/hdb-events-go v1.0.8 h1:v1j1+a5+J+Wd8QZIfqvquSPiyGX1AMPIA7hwFwoul7o=
 github.com/tommzn/hdb-events-go v1.0.8/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
+github.com/tommzn/hdb-events-go v1.0.9 h1:jNolSywEHZshR7hsHPRKafy+T3uSTA4DkKhr7nwyF4c=
+github.com/tommzn/hdb-events-go v1.0.9/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-message-client v1.1.0 h1:MwxqAL/keCKVPg7pbOp9CL39K8mlgQ6DFafN3LvrCbs=
 github.com/tommzn/hdb-message-client v1.1.0/go.mod h1:FAB9jLM7gIUh/NsRAOa5Llo3GijYwrfFI4XC9UfZLsI=
 github.com/tommzn/hdb-message-client v1.1.1 h1:fx39KySM+5nuCL6bI8bzlraHxEkloYvDe5G+sQkmJfM=
@@ -519,6 +521,8 @@ github.com/tommzn/hdb-renderer-syncsign v1.2.13 h1:GwUPwcMEtRKkirMujpryOB0e3cN6o
 github.com/tommzn/hdb-renderer-syncsign v1.2.13/go.mod h1:kqkUCJaj8G2sJOKCWE7/wyH2Yl/v7IEVQKwyF5EYjN0=
 github.com/tommzn/hdb-renderer-syncsign v1.2.14 h1:utESwB4gBYdGo04Wn9ImlQO9MHrkpsd3kl3Pn3ghQdU=
 github.com/tommzn/hdb-renderer-syncsign v1.2.14/go.mod h1:kqkUCJaj8G2sJOKCWE7/wyH2Yl/v7IEVQKwyF5EYjN0=
+github.com/tommzn/hdb-renderer-syncsign v1.2.15 h1:dBmY0mXPULEkA/B+raitocE9O3T3urUjU8W8n2ZH030=
+github.com/tommzn/hdb-renderer-syncsign v1.2.15/go.mod h1:VnHRJ/V2mJjhqpp1j03j0Al9XxOYIOputxSFcDIIKsw=
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
