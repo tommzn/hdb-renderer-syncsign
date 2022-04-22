@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@4.9.3
+
 jobs:
   github-build-and_push:
     machine:
@@ -23,15 +26,20 @@ jobs:
       - run:
           name: GHCR Logout
           command: docker logout
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
   
 workflows:
   version: 2
   arm64-image-build:
     jobs:
       - github-build-and_push:
+          context: slack-secrets
           filters:
             tags:
               only: /^k8s\/v[0-9]+(\.[0-9]+)*$/
             branches:
               ignore: /.*/
           
+      
