@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	syslog "log"
+	"os"
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
@@ -44,6 +46,8 @@ func newSecretsManager() secrets.SecretsManager {
 
 // newLogger creates a new logger from  passed config.
 func newLogger(conf config.Config, secretsMenager secrets.SecretsManager, ctx context.Context) log.Logger {
+	syslog.Println(os.Getenv("K8S_NODE_NAME"))
+	syslog.Println(os.Getenv("K8S_POD_NAME"))
 	logger := log.NewLoggerFromConfig(conf, secretsMenager)
 	logger = log.WithNameSpace(logger, "hdb-renderer-syncsign")
 	return log.WithK8sContext(logger)
