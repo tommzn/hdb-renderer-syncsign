@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os"
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
@@ -46,14 +45,6 @@ func newSecretsManager() secrets.SecretsManager {
 // newLogger creates a new logger from  passed config.
 func newLogger(conf config.Config, secretsMenager secrets.SecretsManager, ctx context.Context) log.Logger {
 	logger := log.NewLoggerFromConfig(conf, secretsMenager)
-	logContextValues := make(map[string]string)
-	logContextValues[log.LogCtxNamespace] = "hdb-renderer-syncsign"
-	if node, ok := os.LookupEnv("K8S_NODE_NAME"); ok {
-		logContextValues[log.LogCtxK8sNode] = node
-	}
-	if pod, ok := os.LookupEnv("K8S_POD_NAME"); ok {
-		logContextValues[log.LogCtxK8sPod] = pod
-	}
-	logger.WithContext(log.LogContextWithValues(ctx, logContextValues))
-	return logger
+	logger = log.WithNameSpace(logger, "hdb-renderer-syncsign")
+	return log.WithK8sContext(logger)
 }
