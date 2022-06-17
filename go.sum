@@ -429,6 +429,8 @@ github.com/tommzn/hdb-events-go v1.0.8 h1:v1j1+a5+J+Wd8QZIfqvquSPiyGX1AMPIA7hwFw
 github.com/tommzn/hdb-events-go v1.0.8/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-events-go v1.0.9 h1:jNolSywEHZshR7hsHPRKafy+T3uSTA4DkKhr7nwyF4c=
 github.com/tommzn/hdb-events-go v1.0.9/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
+github.com/tommzn/hdb-events-go v1.0.11 h1:gkxRQ2cUreglCRfijNHywz586moLm5uTz+wwvjRYdMw=
+github.com/tommzn/hdb-events-go v1.0.11/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-message-client v1.1.10 h1:DPxK6NARLvscb8RqWONRCT0E43Je7E4YBNtBbAEb7AE=
 github.com/tommzn/hdb-message-client v1.1.10/go.mod h1:Za0Q6fEE8g3VC5W+0h/LpIrRLEOVG5arcSh605WpewU=
 github.com/tommzn/hdb-message-client v1.1.11 h1:UIx1BGBbIR00G4ZpT1fCyMdQii2anZyAIgyx1qfnLP0=
