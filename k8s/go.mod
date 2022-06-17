@@ -10,9 +10,9 @@ require (
 	github.com/tommzn/go-log v1.1.1
 	github.com/tommzn/go-secrets v1.1.2
 	github.com/tommzn/hdb-core v1.0.1
-	github.com/tommzn/hdb-events-go v1.0.9
+	github.com/tommzn/hdb-events-go v1.0.11
 	github.com/tommzn/hdb-message-client v1.1.13
 	github.com/tommzn/hdb-renderer-core v1.1.6
-	github.com/tommzn/hdb-renderer-syncsign v1.2.15
+	github.com/tommzn/hdb-renderer-syncsign v1.2.17
 	google.golang.org/protobuf v1.27.1
 )
