@@ -13,6 +13,6 @@ require (
 	github.com/tommzn/hdb-events-go v1.0.11
 	github.com/tommzn/hdb-message-client v1.1.13
 	github.com/tommzn/hdb-renderer-core v1.1.6
-	github.com/tommzn/hdb-renderer-syncsign v1.2.19
+	github.com/tommzn/hdb-renderer-syncsign v1.2.20
 	google.golang.org/protobuf v1.27.1
 )
