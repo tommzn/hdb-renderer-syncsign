@@ -21,7 +21,7 @@ func (suite *WeatherTestSuite) TestGenerateContent() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "b86b9b822c51cbaaae2f8383a81028f8f3e630f8")
+	assertTemplateHash(suite.Assert(), content, "77d2a2a7a86a9e62a09ad608ea235d5fd4f9a6d8")
 }
 
 func (suite *WeatherTestSuite) TestFormatWindSpeed() {
@@ -29,9 +29,9 @@ func (suite *WeatherTestSuite) TestFormatWindSpeed() {
 	fixtures := weatherDataForTest()
 	weatherData := fixtures[0].(*events.WeatherData)
 
-	suite.Equal("45", formatWindSpeed(weatherData))
+	suite.Equal("45", formatWindSpeed(weatherData.Current))
 
 	weatherData.Current.WindSpeed = 7
 	weatherData.Current.WindGust = 32
-	suite.Equal("7/32", formatWindSpeed(weatherData))
+	suite.Equal("7/32", formatWindSpeed(weatherData.Current))
 }

@@ -104,7 +104,7 @@ func (renderer *WeatherRenderer) currentWeatherData() weatherData {
 		Anchor:        renderer.anchor,
 		WeatherIcon:   renderer.weatherIconMap.toWeatherIcon(renderer.weatherData.Current.Weather.Icon),
 		Temperature:   fmt.Sprintf("%.1f", renderer.weatherData.Current.Temperature),
-		WindSpeed:     fmt.Sprintf("%d - %d", int(renderer.weatherData.Current.WindSpeed), int(renderer.weatherData.Current.WindGust)),
+		WindSpeed:     formatWindSpeed(renderer.weatherData.Current),
 		WindDirection: degreesToDirection(renderer.weatherData.Current.WindDirection),
 		Day:           renderer.weatherData.Current.Timestamp.AsTime().Format("Monday"),
 		DisplayIndex:  0,
@@ -136,10 +136,10 @@ func (renderer *WeatherRenderer) forecastWeatherData() []weatherData {
 	return forecasts
 }
 
-func formatWindSpeed(weatherData *events.WeatherData) string {
-	windSpeed := fmt.Sprintf("%d", int(weatherData.Current.WindSpeed))
-	if weatherData.Current.WindGust > 0 {
-		windSpeed += fmt.Sprintf("/%d", int(weatherData.Current.WindGust))
+func formatWindSpeed(weather *events.CurrentWeather) string {
+	windSpeed := fmt.Sprintf("%d", int(weather.WindSpeed))
+	if weather.WindGust > 0 {
+		windSpeed += fmt.Sprintf("/%d", int(weather.WindGust))
 	}
 	return windSpeed
 }
