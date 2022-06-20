@@ -21,7 +21,7 @@ func (suite *WeatherTestSuite) TestGenerateContent() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "88e2d6cb381a2154c1be9d69b960174035e1ce8d")
+	assertTemplateHash(suite.Assert(), content, "b86b9b822c51cbaaae2f8383a81028f8f3e630f8")
 }
 
 func (suite *WeatherTestSuite) TestFormatWindSpeed() {
