@@ -135,3 +135,11 @@ func (renderer *WeatherRenderer) forecastWeatherData() []weatherData {
 	}
 	return forecasts
 }
+
+func formatWindSpeed(weatherData *events.WeatherData) string {
+	windSpeed := fmt.Sprintf("%d", int(weatherData.Current.WindSpeed))
+	if weatherData.Current.WindGust > 0 {
+		windSpeed += fmt.Sprintf("/%d", int(weatherData.Current.WindGust))
+	}
+	return windSpeed
+}
