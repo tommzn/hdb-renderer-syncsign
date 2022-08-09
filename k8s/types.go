@@ -7,6 +7,7 @@ import (
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
+	datasource "github.com/tommzn/hdb-message-client"
 	core "github.com/tommzn/hdb-renderer-core"
 	syncsign "github.com/tommzn/hdb-renderer-syncsign"
 )
@@ -37,6 +38,7 @@ type factory struct {
 	weatherRenderer         core.Renderer
 	responseRenderer        map[string]core.Renderer
 	displayConfig           *syncsign.DisplayConfig
+	datasources             []datasource.Client
 }
 
 type emptyResponse struct {
