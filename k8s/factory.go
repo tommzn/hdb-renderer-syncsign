@@ -6,6 +6,7 @@ import (
 
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
+	metrics "github.com/tommzn/go-metrics"
 	datasource "github.com/tommzn/hdb-message-client"
 	core "github.com/tommzn/hdb-renderer-core"
 	syncsign "github.com/tommzn/hdb-renderer-syncsign"
@@ -18,6 +19,7 @@ func newFactory(conf config.Config, logger log.Logger, ctx context.Context) *fac
 		ctx:              ctx,
 		wg:               &sync.WaitGroup{},
 		responseRenderer: make(map[string]core.Renderer),
+		datasources:      []datasource.Client{},
 	}
 }
 
@@ -130,6 +132,7 @@ func (f *factory) newDataSource() core.DataSource {
 	dataSource := datasource.New(f.conf, f.logger)
 	f.wg.Add(1)
 	go dataSource.Run(f.ctx, f.wg)
+	f.datasources = append(f.datasources, dataSource)
 	return dataSource
 }
 
@@ -150,4 +153,13 @@ func (f *factory) newDisplayConfig() *syncsign.DisplayConfig {
 		f.displayConfig = syncsign.NewDisplayConfig(f.conf)
 	}
 	return f.displayConfig
+}
+
+func (f *factory) dataSourceMetrics() map[int][]metrics.Measurement {
+
+	dataSourceMetrics := make(map[int][]metrics.Measurement)
+	for id, datasource := range f.datasources {
+		dataSourceMetrics[id] = datasource.Metrics()
+	}
+	return dataSourceMetrics
 }

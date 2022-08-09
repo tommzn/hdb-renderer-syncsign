@@ -28,7 +28,7 @@ func (suite *FactoryTestSuite) TestCreate() {
 	suite.NotNil(diFactory.newResponseRenderer("Node01"))
 	suite.NotNil(diFactory.newIndoorClimateRenderer())
 
-	suite.NotNil(diFactory.newIndoorClimateDataSource())
+	suite.NotNil(diFactory.newDataSource())
 
 	displayConfig := diFactory.newDisplayConfig()
 	suite.NotNil(displayConfig)
