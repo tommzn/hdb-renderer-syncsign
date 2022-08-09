@@ -42,3 +42,18 @@ hdb:
         roomId: "1"
       - id: "Device02"
         roomId: "2"
+  weather:
+    template: 
+      current: "weather_current.json"
+      forecast: "weather_forecast.json"  
+    anchor:
+      "x": 100
+      "y": 120
+    current:
+      size:
+        height: "150"
+        width: "70"
+    forecast:
+      size:
+        height: "150"
+        width: "70"
