@@ -27,6 +27,12 @@ jobs:
           name: GHCR Logout
           command: docker logout
       - run:
+          name: Setup Ev Variables
+          command: |
+            echo 'export REPOSITORY=$(echo "$CIRCLE_REPOSITORY_URL" | sed -e "s/.*\/\(.*\)\.git/\1/")' >> $BASH_ENV
+            echo 'export VERSION_TAG=$(echo "$CIRCLE_TAG" | sed -e "s#k8s/##")' >> $BASH_ENV
+            source $BASH_ENV
+      - run:
           name: Tigger GitLab Pipeline
           command: |
             curl \
@@ -34,7 +40,7 @@ jobs:
               --form token=$GL_API_TOKEN \
               --form ref=deployment \
               --form "variables[REPOSITORY]=$REPOSITORY" \
-              --form "variables[VERSION]=$CIRCLE_TAG" \
+              --form "variables[VERSION]=$VERSION_TAG" \
               "https://gitlab.com/api/v4/projects/$GL_PROJECT_ID/trigger/pipeline" 
       - slack/notify:
           event: fail
