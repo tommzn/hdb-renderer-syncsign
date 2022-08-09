@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/suite"
 	config "github.com/tommzn/go-config"
 	log "github.com/tommzn/go-log"
+	syncsign "github.com/tommzn/hdb-renderer-syncsign"
 	"io/ioutil"
 	"net/http"
 	"sync"
@@ -17,6 +18,7 @@ type ServerTestSuite struct {
 	suite.Suite
 	conf       config.Config
 	logger     log.Logger
+	nodeId     string
 	ctx        context.Context
 	cancelFunc context.CancelFunc
 	wg         *sync.WaitGroup
@@ -29,6 +31,7 @@ func TestServerTestSuite(t *testing.T) {
 func (suite *ServerTestSuite) SetupSuite() {
 	suite.conf = loadConfigForTest(nil)
 	suite.logger = loggerForTest()
+	suite.nodeId = "Display01"
 }
 
 func (suite *ServerTestSuite) SetupTest() {
@@ -76,8 +79,7 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	suite.NotNil(resp1)
 	suite.Equal(http.StatusOK, resp1.StatusCode)
 
-	nodeId := "Display01"
-	resp2, err2 := http.Get("http://localhost:8080/renders/nodes/" + nodeId)
+	resp2, err2 := http.Get("http://localhost:8080/renders/nodes/" + suite.nodeId)
 	suite.Nil(err2)
 	suite.NotNil(resp2)
 	resBody2 := suite.readBody(resp2)
@@ -86,8 +88,8 @@ func (suite *ServerTestSuite) TestNodeRequest() {
 	suite.Equal(http.StatusOK, resp2.StatusCode)
 	resData := suite.asTestResponse(resBody2)
 	suite.Len(resData.Data, 1)
-	suite.Equal(nodeId, resData.Data[0].NodeId)
-	suite.Len(resData.Data[0].Content.Items, 12)
+	suite.Equal(suite.nodeId, resData.Data[0].NodeId)
+	suite.Len(resData.Data[0].Content.Items, 11)
 	suite.stopServer()
 }
 
@@ -101,7 +103,16 @@ func (suite *ServerTestSuite) startServer(server *webServer) {
 }
 
 func (suite *ServerTestSuite) serverForTest() *webServer {
-	return newServer(suite.conf, suite.logger, newFactory(suite.conf, suite.logger, suite.ctx))
+
+	dsMock := newDataSourceMock([]string{suite.nodeId}, suite.logger)
+	dsMock.(*dataSourceMock).initMessages()
+
+	diFactory := newFactory(suite.conf, suite.logger, suite.ctx)
+	diFactory.weatherRenderer = syncsign.NewWeatherRenderer(suite.conf, suite.logger, diFactory.newCurrentWeatherTemplate(), diFactory.newForeCastWeatherTemplate(), dsMock)
+	diFactory.indoorClimateRenderer = syncsign.NewIndoorClimateRenderer(suite.conf, suite.logger, diFactory.newIndoorClimateTemplate(), dsMock)
+	diFactory.billingReportRenderer = syncsign.NewBillingReportRenderer(suite.conf, suite.logger, diFactory.newBillingReportTemplate(), dsMock)
+
+	return newServer(suite.conf, suite.logger, diFactory)
 }
 
 func (suite *ServerTestSuite) stopServer() {

@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"regexp"
 	"sync"
 	"time"
 
@@ -42,6 +43,7 @@ func (server *webServer) Run(ctx context.Context, waitGroup *sync.WaitGroup) err
 	router.HandleFunc("/renders/{renderid}", server.handleRenderRequest).Methods("GET")
 
 	router.HandleFunc("/health", server.handleHealthCheckRequest).Methods("GET")
+	router.HandleFunc("/metrics", server.handleMetricsRequest).Methods("GET")
 
 	server.logger.Infof("Listen [%s]", server.port)
 	server.logger.Flush()
@@ -137,6 +139,11 @@ func (server *webServer) handleNodeRequest(w http.ResponseWriter, r *http.Reques
 	server.writeResponse(w, content)
 }
 
+// handleMetricsRequest will collect metrics from all datasources.
+func (server *webServer) handleMetricsRequest(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(server.diFactory.dataSourceMetrics())
+}
+
 // WriteResponse writes given content to response writer. If statusCode is not nil it's set as header.
 func (server *webServer) writeResponse(w http.ResponseWriter, content string) {
 	buf := &bytes.Buffer{}
@@ -152,6 +159,11 @@ func (server *webServer) writeResponse(w http.ResponseWriter, content string) {
 
 // WriteResponseError will generate a error response and write it to given response writer.
 func (server *webServer) writeResponseError(w http.ResponseWriter, nodeId string, err error) {
+
+	// Remove new line before JSON conversion
+	re := regexp.MustCompile(`\r?\n`)
+	err = errors.New(re.ReplaceAllString(err.Error(), "\\n"))
+
 	server.logger.Error(err)
 	errorRenderer := server.diFactory.newErrorResponseRenderer(nodeId, err)
 	errContent, _ := errorRenderer.Content()
