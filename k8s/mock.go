@@ -79,6 +79,7 @@ func (mock *dataSourceMock) initMessages() {
 	}
 	mock.publisBillingReport()
 	mock.publisExchangeRate()
+	mock.publisWeatherEvent()
 }
 
 func (mock *dataSourceMock) publishNewMessage() {
@@ -104,6 +105,7 @@ func (mock *dataSourceMock) publishNewMessage() {
 
 	mock.publisBillingReport()
 	mock.publisExchangeRate()
+	mock.publisWeatherEvent()
 }
 
 func (mock *dataSourceMock) publisBillingReport() {
@@ -133,6 +135,52 @@ func (mock *dataSourceMock) publisExchangeRate() {
 	}
 	mock.appendToStack(exchangeRate, hdbcore.DATASOURCE_EXCHANGERATE)
 	mock.writeToChannel(exchangeRate, hdbcore.DATASOURCE_EXCHANGERATE)
+}
+
+func (mock *dataSourceMock) publisWeatherEvent() {
+
+	weatherEvent := &events.WeatherData{
+		Location: &events.Location{
+			Longitude: 1.0,
+			Latitude:  1.0,
+		},
+		Units: "metric",
+		Current: &events.CurrentWeather{
+			Timestamp:   timestamppb.New(time.Now()),
+			Temperature: 23.4,
+			WindSpeed:   12.1,
+			Weather: &events.WeatherDetails{
+				ConditionId: 12,
+				Group:       "sunny",
+				Description: "sunny",
+				Icon:        "10d",
+			},
+			WindDirection: 180,
+			WindGust:      34.6,
+		},
+		Forecast: []*events.ForecastWeather{
+			&events.ForecastWeather{
+				Timestamp: timestamppb.New(time.Now().Add(24 * time.Hour)),
+				Temperatures: &events.ForecastTemperatures{
+					Morning: 17.4,
+					Day:     28.6,
+					Evening: 21.4,
+					Night:   6.7,
+					DayMin:  34.2,
+					DayMax:  40.1,
+				},
+				WindSpeed: 54.6,
+				Weather: &events.WeatherDetails{
+					ConditionId: 12,
+					Group:       "sunny",
+					Description: "sunny",
+					Icon:        "10d",
+				},
+			},
+		},
+	}
+	mock.appendToStack(weatherEvent, hdbcore.DATASOURCE_WEATHER)
+	mock.writeToChannel(weatherEvent, hdbcore.DATASOURCE_WEATHER)
 }
 
 func (mock *dataSourceMock) randomSelectMeasurementType() events.MeasurementType {
