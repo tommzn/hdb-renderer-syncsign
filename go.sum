@@ -425,12 +425,16 @@ github.com/tommzn/go-utils v1.0.2 h1:OnUdCJC46ogBDNnt+zwG1bN/RyoYoeNWBvPTbBITIGo
 github.com/tommzn/go-utils v1.0.2/go.mod h1:TaQQLOtzHNmRx+/WUHgyNYvsqUX1N0JJEePC8Pye0Ow=
 github.com/tommzn/hdb-core v1.0.1 h1:D+1/2CN+A7zt4cJ11JOGwSlEDa8OTDHfZzzFq0MzQY4=
 github.com/tommzn/hdb-core v1.0.1/go.mod h1:06kIRFbE7WrOZev4jtySE4d2fEMOv4lzHwg/n27vabk=
+github.com/tommzn/hdb-core v1.0.3 h1:6ovriNsGWCLueFlpQbDcx9U4+Iq3sjrcuHPefVCuzGc=
+github.com/tommzn/hdb-core v1.0.3/go.mod h1:06kIRFbE7WrOZev4jtySE4d2fEMOv4lzHwg/n27vabk=
 github.com/tommzn/hdb-events-go v1.0.8 h1:v1j1+a5+J+Wd8QZIfqvquSPiyGX1AMPIA7hwFwoul7o=
 github.com/tommzn/hdb-events-go v1.0.8/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-events-go v1.0.9 h1:jNolSywEHZshR7hsHPRKafy+T3uSTA4DkKhr7nwyF4c=
 github.com/tommzn/hdb-events-go v1.0.9/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-events-go v1.0.11 h1:gkxRQ2cUreglCRfijNHywz586moLm5uTz+wwvjRYdMw=
 github.com/tommzn/hdb-events-go v1.0.11/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
+github.com/tommzn/hdb-events-go v1.0.13 h1:GOtQvaKEPRG9QdfZlrMyeKE80wVaLKRaH5287SdKuqo=
+github.com/tommzn/hdb-events-go v1.0.13/go.mod h1:Pi0wRugUxNO81wqM4lFoie1C6oE8zUbq4h4TjSgvBi4=
 github.com/tommzn/hdb-message-client v1.1.10 h1:DPxK6NARLvscb8RqWONRCT0E43Je7E4YBNtBbAEb7AE=
 github.com/tommzn/hdb-message-client v1.1.10/go.mod h1:Za0Q6fEE8g3VC5W+0h/LpIrRLEOVG5arcSh605WpewU=
 github.com/tommzn/hdb-message-client v1.1.11 h1:UIx1BGBbIR00G4ZpT1fCyMdQii2anZyAIgyx1qfnLP0=

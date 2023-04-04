@@ -90,15 +90,25 @@ func (suite *UtilsTestSuite) TestFormatValues() {
 	suite.Equal("xxx", formatHumidity("xxx"))
 }
 
+func (suite *UtilsTestSuite) TestParseBatteryValue() {
+
+	intVal01 := batteryValueToInt("96.7")
+	suite.Equal(96, intVal01)
+	intVal02 := batteryValueToInt("93")
+	suite.Equal(93, intVal02)
+	intVal03 := batteryValueToInt("xxx")
+	suite.Equal(0, intVal03)
+}
+
 func (suite *UtilsTestSuite) TestBatteryIcon() {
 
 	suite.Equal(COLOR_BLACK, batteryIconColor("100"))
 	suite.Equal(COLOR_BLACK, batteryIconColor("10"))
-	suite.Equal(COLOR_BLACK, batteryIconColor("xxx"))
 	suite.Equal(COLOR_RED, batteryIconColor("5"))
 	suite.Equal(COLOR_RED, batteryIconColor("1"))
 	suite.Equal(COLOR_RED, batteryIconColor("4"))
 	suite.Equal(COLOR_RED, batteryIconColor("0"))
+	suite.Equal(COLOR_RED, batteryIconColor("xxx"))
 
 	suite.Equal(BATTERY_LEVEL_0_4, batteryIcon("xxx"))
 	suite.Equal(BATTERY_LEVEL_4_4, batteryIcon("100"))

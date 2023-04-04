@@ -14,8 +14,8 @@ require (
 	github.com/tommzn/go-log v1.1.0
 	github.com/tommzn/go-secrets v1.1.1 // indirect
 	github.com/tommzn/go-utils v1.0.2
-	github.com/tommzn/hdb-core v1.0.1
-	github.com/tommzn/hdb-events-go v1.0.11
+	github.com/tommzn/hdb-core v1.0.3
+	github.com/tommzn/hdb-events-go v1.0.13
 	github.com/tommzn/hdb-message-client v1.1.12 // indirect
 	github.com/tommzn/hdb-renderer-core v1.1.6
 	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect

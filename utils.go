@@ -109,28 +109,41 @@ func formatHumidity(humidity string) string {
 }
 
 func batteryIcon(batteryValue string) batteryLevelIcon {
-	if intVal, err := strconv.Atoi(batteryValue); err == nil {
-		switch {
-		case intVal >= 90:
-			return BATTERY_LEVEL_4_4
-		case intVal >= 75:
-			return BATTERY_LEVEL_3_4
-		case intVal >= 50:
-			return BATTERY_LEVEL_2_4
-		case intVal >= 10:
-			return BATTERY_LEVEL_1_4
-		case intVal <= 10:
-			return BATTERY_LEVEL_0_4
-		}
+	intVal := batteryValueToInt(batteryValue)
+	switch {
+	case intVal >= 90:
+		return BATTERY_LEVEL_4_4
+	case intVal >= 75:
+		return BATTERY_LEVEL_3_4
+	case intVal >= 50:
+		return BATTERY_LEVEL_2_4
+	case intVal >= 10:
+		return BATTERY_LEVEL_1_4
+	case intVal <= 10:
+		return BATTERY_LEVEL_0_4
+	default:
+		return BATTERY_LEVEL_0_4
 	}
-	return BATTERY_LEVEL_0_4
+
 }
 
 func batteryIconColor(batteryValue string) textColor {
-	if intVal, err := strconv.Atoi(batteryValue); err == nil && intVal <= 5 {
+	intVal := batteryValueToInt(batteryValue)
+	if intVal <= 5 {
 		return COLOR_RED
 	}
 	return COLOR_BLACK
+}
+
+func batteryValueToInt(batteryValue string) int {
+
+	if intVal, err := strconv.Atoi(batteryValue); err == nil {
+		return intVal
+	}
+	if floatVal, err := strconv.ParseFloat(batteryValue, 32); err == nil {
+		return int(floatVal)
+	}
+	return 0
 }
 
 // AppendItems appends passed items to given content, separated by default JSON element separattor: ",".
