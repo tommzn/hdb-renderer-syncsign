@@ -1,7 +1,6 @@
 package syncsign
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/suite"
 	"testing"
 
@@ -22,8 +21,7 @@ func (suite *WeatherTestSuite) TestGenerateContent() {
 
 	content, err := renderer.Content()
 	suite.Nil(err)
-	assertTemplateHash(suite.Assert(), content, "e14d2536f211505adca5bbb96d823a90027183d3")
-	fmt.Println(content)
+	assertTemplateHash(suite.Assert(), content, "6f8c9bfe2b5ecec87dd998bb1aa150bd08eadc56")
 }
 
 func (suite *WeatherTestSuite) TestFormatWindSpeed() {
