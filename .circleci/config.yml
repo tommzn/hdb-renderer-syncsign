@@ -4,6 +4,12 @@ orbs:
   slack: circleci/slack@4.9.3
 
 jobs:
+  notify:
+    machine:
+      image: ubuntu-2004:202101-01
+    steps:
+      - slack/notify:
+          template: success_tagged_deploy_1
   github-build-and-push:
     machine:
       image: ubuntu-2004:202101-01
@@ -12,10 +18,10 @@ jobs:
       - checkout
       - run:
           name: GHCR Login
-          command: echo $CR_PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+          command: echo $GHCR_PAT | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
       - run:
-          working_directory: k8s
           name: Build Image
+          working_directory: k8s
           command: |
             IMAGE_TAG="$(git tag -l k8s/v* --sort=authordate | tail  -n 1 | sed 's/k8s\///')"
             echo Image Tag $IMAGE_TAG
@@ -26,39 +32,24 @@ jobs:
       - run:
           name: GHCR Logout
           command: docker logout
-      - run:
-          name: Setup Ev Variables
-          command: |
-            echo 'export REPOSITORY=$(echo "$CIRCLE_REPOSITORY_URL" | sed -e "s/.*\/\(.*\)\.git/\1/")' >> $BASH_ENV
-            echo 'export VERSION_TAG=$(echo "$CIRCLE_TAG" | sed -e "s#k8s/##")' >> $BASH_ENV
-            source $BASH_ENV
-      - run:
-          name: Tigger GitLab Pipeline
-          command: |
-            curl \
-              --request POST \
-              --form token=$GL_API_TOKEN \
-              --form ref=deployment \
-              --form "variables[REPOSITORY]=$REPOSITORY" \
-              --form "variables[VERSION]=$VERSION_TAG" \
-              "https://gitlab.com/api/v4/projects/$GL_PROJECT_ID/trigger/pipeline" 
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
-  
+    
 workflows:
   version: 2
   arm64-image-build:
     jobs:
       - github-build-and-push:
-          context: slack-secrets
+          context: github-env
           filters:
             tags:
               only: /^k8s\/v[0-9]+(\.[0-9]+)*$/
             branches:
               ignore: /.*/
-          
-      
+      - notify: 
+          context: slack-env
+          filters:
+            tags:
+              only: /^k8s\/v[0-9]+(\.[0-9]+)*$/
+            branches:
+              ignore: /.*/
+          requires:
+            - github-build-and-push
